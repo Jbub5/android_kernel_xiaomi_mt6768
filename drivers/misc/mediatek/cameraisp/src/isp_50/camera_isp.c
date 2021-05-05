@@ -753,10 +753,10 @@ static struct SV_LOG_STR gSvLog[ISP_IRQ_TYPE_AMOUNT];
 					    '\0') {\
 						ptr[NORMAL_STR_LEN*(i+1) - 1] =\
 						    '\0';\
-						LOG_INF("%s",\
+						LOG_DBG("%s",\
 						    &ptr[NORMAL_STR_LEN*i]);\
 					} else{\
-						LOG_INF("%s",\
+						LOG_DBG("%s",\
 						    &ptr[NORMAL_STR_LEN*i]);\
 						break;\
 					} \
@@ -833,9 +833,9 @@ static struct SV_LOG_STR gSvLog[ISP_IRQ_TYPE_AMOUNT];
 			for (i = 0; i < INF_PAGE; i++) {\
 				if (ptr[NORMAL_STR_LEN*(i+1) - 1] != '\0') {\
 					ptr[NORMAL_STR_LEN*(i+1) - 1] = '\0';\
-					LOG_INF("%s", &ptr[NORMAL_STR_LEN*i]);\
+					LOG_DBG("%s", &ptr[NORMAL_STR_LEN*i]);\
 				} else{\
-					LOG_INF("%s", &ptr[NORMAL_STR_LEN*i]);\
+					LOG_DBG("%s", &ptr[NORMAL_STR_LEN*i]);\
 					break;\
 				} \
 			} \
@@ -1511,7 +1511,7 @@ static int ISP_ReadReg(struct ISP_REG_IO_STRUCT *pRegIo)
 	if ((pRegIo->pData == NULL) ||
 			(pRegIo->Count == 0) ||
 			(pRegIo->Count > ISP_REG_RANGE)) {
-		LOG_NOTICE(
+		LOG_DBG(
 			"pRegIo->pData is NULL, Count:%d!!\n",
 			pRegIo->Count);
 		Ret = -EFAULT;
@@ -2816,7 +2816,7 @@ static long ISP_ioctl(struct file *pFile, unsigned int Cmd, unsigned long Param)
 			 * is implemented in ISP_WriteReg(...)
 			 */
 			if (RegIo.Count * sizeof(struct ISP_REG_STRUCT) > 0xFFFFF000) {
-				LOG_NOTICE("RegIo.Count error");
+				LOG_DBG("RegIo.Count error");
 				Ret = -EFAULT;
 				goto EXIT;
 			}
@@ -3548,7 +3548,7 @@ static long ISP_ioctl(struct file *pFile, unsigned int Cmd, unsigned long Param)
 
 		if (copy_from_user(&cq0_data, (void *)Param,
 			sizeof(unsigned int) * CAM_MAX * 2) != 0) {
-			LOG_NOTICE("copy to user fail");
+			LOG_DBG("copy to user fail");
 			Ret = -EFAULT;
 			break;
 		}
@@ -3557,7 +3557,7 @@ static long ISP_ioctl(struct file *pFile, unsigned int Cmd, unsigned long Param)
 			if (cq0_data[CAM_A][1] != 0) {
 				g_cqBaseAddr[cq0_data[CAM_A][0]][0] =
 					cq0_data[CAM_A][1];
-				/*LOG_NOTICE("(CAM A)CQ0 pa 0x%x, 0x%x",
+				/*LOG_DBG("(CAM A)CQ0 pa 0x%x, 0x%x",
 				 *cq0_data[CAM_A][0], cq0_data[CAM_A][1]);
 				 */
 			}
@@ -3567,7 +3567,7 @@ static long ISP_ioctl(struct file *pFile, unsigned int Cmd, unsigned long Param)
 			if (cq0_data[CAM_B][1] != 0) {
 				g_cqBaseAddr[cq0_data[CAM_B][0]][0] =
 					cq0_data[CAM_B][1];
-				/*LOG_NOTICE("(CAM B)CQ0 pa 0x%x, 0x%x",
+				/*LOG_DBG("(CAM B)CQ0 pa 0x%x, 0x%x",
 				 *cq0_data[CAM_B][0], cq0_data[CAM_B][1]);
 				 */
 			}
@@ -3577,7 +3577,7 @@ static long ISP_ioctl(struct file *pFile, unsigned int Cmd, unsigned long Param)
 			if (cq0_data[CAM_C][1] != 0) {
 				g_cqBaseAddr[cq0_data[CAM_C][0]][0] =
 					cq0_data[CAM_C][1];
-				/*LOG_NOTICE("(CAM C)CQ0 pa 0x%x, 0x%x",
+				/*LOG_DBG("(CAM C)CQ0 pa 0x%x, 0x%x",
 				 *cq0_data[CAM_C][0], cq0_data[CAM_C][1]);
 				 */
 			}
@@ -4097,10 +4097,10 @@ static long ISP_ioctl(struct file *pFile, unsigned int Cmd, unsigned long Param)
 				ISP_IRQ_TYPE_INT_CAM_A_ST))
 				g_virtual_cq_cnt[_cq_cnt[0]] = _cq_cnt[1];
 			else
-				LOG_NOTICE("invalid HW module(%d)\n",
+				LOG_DBG("invalid HW module(%d)\n",
 					_cq_cnt[0]);
 		} else {
-			LOG_NOTICE(
+			LOG_DBG(
 				"Virtual CQ count copy_from_user failed\n");
 			Ret = -EFAULT;
 		}
@@ -7540,11 +7540,11 @@ unsigned int CQ_Recover(unsigned int ErrStatus,
 			reg_module = ISP_CAM_C_IDX;
 			break;
 		default:
-			LOG_NOTICE("Wrong IRQ module: %d",
+			LOG_DBG("Wrong IRQ module: %d",
 				(unsigned int)irg_module);
 			break;
 		}
-		LOG_NOTICE("+CQ recover");
+		LOG_DBG("+CQ recover");
 		reg_module_array[0] = reg_module;
 		twinStatus.Raw = ISP_RD32(CAM_REG_CTL_TWIN_STATUS(reg_module));
 
@@ -7569,7 +7569,7 @@ unsigned int CQ_Recover(unsigned int ErrStatus,
 					reg_module_array[1] = ISP_CAM_C_IDX;
 						break;
 					default:
-					LOG_NOTICE(
+					LOG_DBG(
 					"twin module is invalid! recover fail");
 					goto EXIT_CQ_RECOVER;
 					}
@@ -7585,7 +7585,7 @@ unsigned int CQ_Recover(unsigned int ErrStatus,
 					reg_module_array[2] = ISP_CAM_C_IDX;
 					break;
 					default:
-					LOG_NOTICE(
+					LOG_DBG(
 					"twin module is invalid! recover fail");
 					goto EXIT_CQ_RECOVER;
 					}
@@ -7693,28 +7693,28 @@ unsigned int CQ_Recover(unsigned int ErrStatus,
 		(ISP_RD32(CAM_REG_TG_VF_CON(reg_module)) & 0xFFFFFFFE));
 	ISP_WR32(CAM_REG_TG_SEN_MODE(reg_module),
 		(ISP_RD32(CAM_REG_TG_SEN_MODE(reg_module)) & 0xFFFFFFFE));
-	LOG_NOTICE("disable viewfinder & cmos to do CQ recover");
+	LOG_DBG("disable viewfinder & cmos to do CQ recover");
 
 	/* 3. disable double buffer */
 	for (i = 0; i < reg_module_count; i++) {
 		tmp_module = reg_module_array[i];
 		ISP_WR32(CAM_REG_CTL_MISC(tmp_module),
 			(ISP_RD32(CAM_REG_CTL_MISC(tmp_module)) & 0xFFFFFFEF));
-		LOG_NOTICE("disable double buffer CAM%d to do CQ recover",
+		LOG_DBG("disable double buffer CAM%d to do CQ recover",
 			tmp_module);
 	}
 
-	LOG_NOTICE("start HW recover due to CQ over Vsync ...\n");
-	LOG_NOTICE("fbc:imgo:0x%x,rrzo:0x%x,ufeo:0x%x, ufgo:0x%x\n",
+	LOG_DBG("start HW recover due to CQ over Vsync ...\n");
+	LOG_DBG("fbc:imgo:0x%x,rrzo:0x%x,ufeo:0x%x, ufgo:0x%x\n",
 			fbc_ctrl2[reg_module][_imgo_].Raw,
 			fbc_ctrl2[reg_module][_rrzo_].Raw,
 			fbc_ctrl2[reg_module][_ufeo_].Raw,
 			fbc_ctrl2[reg_module][_ufgo_].Raw);
-	LOG_NOTICE("rsso:0x%x,lmvo:0x%x,lcso:0x%x\n",
+	LOG_DBG("rsso:0x%x,lmvo:0x%x,lcso:0x%x\n",
 			fbc_ctrl2[reg_module][_rsso_].Raw,
 			fbc_ctrl2[reg_module][_lmvo_].Raw,
 			fbc_ctrl2[reg_module][_lcso_].Raw);
-	LOG_NOTICE("fbc:aao:0x%x,afo:0x%x,flko:0x%x,pdo:0x%x,pso:0x%x\n",
+	LOG_DBG("fbc:aao:0x%x,afo:0x%x,flko:0x%x,pdo:0x%x,pso:0x%x\n",
 			fbc_ctrl2[reg_module][_aao_].Raw,
 			fbc_ctrl2[reg_module][_afo_].Raw,
 			fbc_ctrl2[reg_module][_flko_].Raw,
@@ -7810,14 +7810,14 @@ unsigned int CQ_Recover(unsigned int ErrStatus,
 		if (cq_ctrl.Bits.CAMCQ_CQ_EN == 0x1) {
 			ISP_WR32(CAM_REG_CQ_THR0_BASEADDR(tmp_module),
 				g_cqBaseAddr[tmp_module][0]);
-			LOG_NOTICE("CQ0 base0x%x\n",
+			LOG_DBG("CQ0 base0x%x\n",
 				g_cqBaseAddr[tmp_module][0]);
 			if ((g_cqBaseAddr[tmp_module][0] -
 				(unsigned int)ISP_RD32(
 				CAM_REG_CQ_THR0_BASEADDR(tmp_module))) != 0) {
 				ISP_WR32(CAM_REG_CQ_THR0_BASEADDR(tmp_module),
 					g_cqBaseAddr[tmp_module][0]);
-				LOG_NOTICE("restore CQ0 again\n");
+				LOG_DBG("restore CQ0 again\n");
 			}
 		}
 	}
@@ -7830,12 +7830,12 @@ unsigned int CQ_Recover(unsigned int ErrStatus,
 	if (cq_ctrl.Bits.CAMCQ_CQ_EN == 0x1) {
 		ISP_WR32(CAM_REG_CQ_THR4_BASEADDR(tmp_module),
 			g_cqBaseAddr[tmp_module][4]);
-		LOG_NOTICE("CQ4 base0x%x\n", g_cqBaseAddr[tmp_module][4]);
+		LOG_DBG("CQ4 base0x%x\n", g_cqBaseAddr[tmp_module][4]);
 		if ((g_cqBaseAddr[tmp_module][4] - (unsigned int)ISP_RD32(
 			CAM_REG_CQ_THR4_BASEADDR(tmp_module))) != 0) {
 			ISP_WR32(CAM_REG_CQ_THR4_BASEADDR(tmp_module),
 				g_cqBaseAddr[tmp_module][4]);
-			LOG_NOTICE("restore CQ4 again\n");
+			LOG_DBG("restore CQ4 again\n");
 		}
 	}
 	cq_ctrl.Raw = (unsigned int)ISP_RD32(CAM_REG_CQ_THR5_CTL(tmp_module));
@@ -7850,12 +7850,12 @@ unsigned int CQ_Recover(unsigned int ErrStatus,
 	if (cq_ctrl.Bits.CAMCQ_CQ_EN == 0x1) {
 		ISP_WR32(CAM_REG_CQ_THR8_BASEADDR(tmp_module),
 			g_cqBaseAddr[tmp_module][8]);
-		LOG_NOTICE("CQ8 base0x%x\n", g_cqBaseAddr[tmp_module][8]);
+		LOG_DBG("CQ8 base0x%x\n", g_cqBaseAddr[tmp_module][8]);
 		if ((g_cqBaseAddr[tmp_module][8] - (unsigned int)ISP_RD32(
 			CAM_REG_CQ_THR8_BASEADDR(tmp_module))) != 0) {
 			ISP_WR32(CAM_REG_CQ_THR8_BASEADDR(tmp_module),
 				g_cqBaseAddr[tmp_module][8]);
-			LOG_NOTICE("restore CQ8 again\n");
+			LOG_DBG("restore CQ8 again\n");
 		}
 	}
 	cq_ctrl.Raw = (unsigned int)ISP_RD32(CAM_REG_CQ_THR10_CTL(tmp_module));
@@ -7866,12 +7866,12 @@ unsigned int CQ_Recover(unsigned int ErrStatus,
 	if (cq_ctrl.Bits.CAMCQ_CQ_EN == 0x1) {
 		ISP_WR32(CAM_REG_CQ_THR12_BASEADDR(tmp_module),
 			g_cqBaseAddr[tmp_module][12]);
-		LOG_NOTICE("CQ12 base0x%x\n", g_cqBaseAddr[tmp_module][12]);
+		LOG_DBG("CQ12 base0x%x\n", g_cqBaseAddr[tmp_module][12]);
 		if ((g_cqBaseAddr[tmp_module][12] - (unsigned int)ISP_RD32(
 			CAM_REG_CQ_THR12_BASEADDR(tmp_module))) != 0) {
 			ISP_WR32(CAM_REG_CQ_THR12_BASEADDR(tmp_module),
 				g_cqBaseAddr[tmp_module][12]);
-			LOG_NOTICE("restore CQ12 again\n");
+			LOG_DBG("restore CQ12 again\n");
 		}
 	}
 
@@ -7943,7 +7943,7 @@ unsigned int CQ_Recover(unsigned int ErrStatus,
 				do_div(sec, 1000); /* usec */
 				usec = do_div(sec, 1000000);/* sec and usec */
 				if ((usec  - m_usec) > timeoutMs) {
-					LOG_NOTICE("waitCQ0 timeout0x%x,0x%x\n",
+					LOG_DBG("waitCQ0 timeout0x%x,0x%x\n",
 					(unsigned int)ISP_RD32(
 					CAM_REG_CTL_START(tmp_module)),
 					cq_done);
@@ -7953,7 +7953,7 @@ unsigned int CQ_Recover(unsigned int ErrStatus,
 				DmaStatus2.Raw = g_cqDoneStatus[tmp_module];
 				cq_done |= DmaStatus2.Bits.CQ_THR0_DONE_ST;
 			}
-			LOG_NOTICE("wait CQ0 start 0x%x, base 0x%x\n",
+			LOG_DBG("wait CQ0 start 0x%x, base 0x%x\n",
 			(unsigned int)ISP_RD32(CAM_REG_CTL_START(tmp_module)),
 			(unsigned int)ISP_RD32(CAM_REG_CQ_THR0_BASEADDR(
 			tmp_module)));
@@ -7985,7 +7985,7 @@ unsigned int CQ_Recover(unsigned int ErrStatus,
 				do_div(sec, 1000); /* usec */
 				usec = do_div(sec, 1000000);/* sec and usec */
 				if ((usec  - m_usec) > timeoutMs) {
-					LOG_NOTICE("wait CQ1 timeout\n");
+					LOG_DBG("wait CQ1 timeout\n");
 					ret = MFALSE;
 					break;
 				}
@@ -8016,7 +8016,7 @@ unsigned int CQ_Recover(unsigned int ErrStatus,
 				do_div(sec, 1000); /* usec */
 				usec = do_div(sec, 1000000);/* sec and usec */
 				if ((usec  - m_usec) > timeoutMs) {
-					LOG_NOTICE("waitCQ4 timeout0x%x,0x%x\n",
+					LOG_DBG("waitCQ4 timeout0x%x,0x%x\n",
 					(unsigned int)ISP_RD32(
 					CAM_REG_CTL_START(tmp_module)),
 					cq_done);
@@ -8026,7 +8026,7 @@ unsigned int CQ_Recover(unsigned int ErrStatus,
 				DmaStatus2.Raw = g_cqDoneStatus[tmp_module];
 				cq_done |= DmaStatus2.Bits.CQ_THR4_DONE_ST;
 			}
-			LOG_NOTICE("wait CQ4 start 0x%x, base 0x%x\n",
+			LOG_DBG("wait CQ4 start 0x%x, base 0x%x\n",
 			(unsigned int)ISP_RD32(CAM_REG_CTL_START(tmp_module)),
 			(unsigned int)ISP_RD32(CAM_REG_CQ_THR4_BASEADDR(
 				tmp_module)));
@@ -8058,7 +8058,7 @@ unsigned int CQ_Recover(unsigned int ErrStatus,
 				do_div(sec, 1000); /* usec */
 				usec = do_div(sec, 1000000);/* sec and usec */
 				if ((usec  - m_usec) > timeoutMs) {
-					LOG_NOTICE("wait CQ5 timeout\n");
+					LOG_DBG("wait CQ5 timeout\n");
 					ret = MFALSE;
 					break;
 				}
@@ -8089,7 +8089,7 @@ unsigned int CQ_Recover(unsigned int ErrStatus,
 				do_div(sec, 1000); /* usec */
 				usec = do_div(sec, 1000000);/* sec and usec */
 				if ((usec  - m_usec) > timeoutMs) {
-					LOG_NOTICE("wait CQ7 timeout\n");
+					LOG_DBG("wait CQ7 timeout\n");
 					ret = MFALSE;
 					break;
 				}
@@ -8120,7 +8120,7 @@ unsigned int CQ_Recover(unsigned int ErrStatus,
 				do_div(sec, 1000); /* usec */
 				usec = do_div(sec, 1000000);/* sec and usec */
 				if ((usec  - m_usec) > timeoutMs) {
-					LOG_NOTICE("waitCQ8 timeout0x%x,0x%x\n",
+					LOG_DBG("waitCQ8 timeout0x%x,0x%x\n",
 					(unsigned int)ISP_RD32(
 					CAM_REG_CTL_START(tmp_module)),
 					cq_done);
@@ -8130,7 +8130,7 @@ unsigned int CQ_Recover(unsigned int ErrStatus,
 				DmaStatus2.Raw = g_cqDoneStatus[tmp_module];
 				cq_done |= DmaStatus2.Bits.CQ_THR8_DONE_ST;
 			}
-			LOG_NOTICE("wait CQ8 start 0x%x, base 0x%x\n",
+			LOG_DBG("wait CQ8 start 0x%x, base 0x%x\n",
 			(unsigned int)ISP_RD32(CAM_REG_CTL_START(tmp_module)),
 			(unsigned int)ISP_RD32(CAM_REG_CQ_THR8_BASEADDR(
 			tmp_module)));
@@ -8162,7 +8162,7 @@ unsigned int CQ_Recover(unsigned int ErrStatus,
 				do_div(sec, 1000); /* usec */
 				usec = do_div(sec, 1000000);/* sec and usec */
 				if ((usec  - m_usec) > timeoutMs) {
-					LOG_NOTICE("wait CQ10 timeout\n");
+					LOG_DBG("wait CQ10 timeout\n");
 					ret = MFALSE;
 					break;
 				}
@@ -8193,7 +8193,7 @@ unsigned int CQ_Recover(unsigned int ErrStatus,
 				do_div(sec, 1000); /* usec */
 				usec = do_div(sec, 1000000);/* sec and usec */
 				if ((usec  - m_usec) > timeoutMs) {
-					LOG_NOTICE("CQ12 timeout0x%x, 0x%x\n",
+					LOG_DBG("CQ12 timeout0x%x, 0x%x\n",
 					(unsigned int)ISP_RD32(
 					CAM_REG_CTL_START(tmp_module)),
 					cq_done);
@@ -8203,7 +8203,7 @@ unsigned int CQ_Recover(unsigned int ErrStatus,
 				DmaStatus2.Raw = g_cqDoneStatus[tmp_module];
 				cq_done |= DmaStatus2.Bits.CQ_THR12_DONE_ST;
 			}
-			LOG_NOTICE("wait CQ12 start 0x%x, base 0x%x\n",
+			LOG_DBG("wait CQ12 start 0x%x, base 0x%x\n",
 			(unsigned int)ISP_RD32(CAM_REG_CTL_START(tmp_module)),
 			(unsigned int)ISP_RD32(CAM_REG_CQ_THR12_BASEADDR(
 			tmp_module)));
@@ -8263,18 +8263,18 @@ unsigned int CQ_Recover(unsigned int ErrStatus,
 		tmp_module = reg_module_array[i];
 		ISP_WR32(CAM_REG_CTL_MISC(tmp_module),
 			(ISP_RD32(CAM_REG_CTL_MISC(tmp_module)) | 0x10));
-		LOG_NOTICE("en double buf CAM%d for CQ recover", tmp_module);
+		LOG_DBG("en double buf CAM%d for CQ recover", tmp_module);
 	}
 	/* 11. enable TG CMOS & viewFinder */
 	ISP_WR32(CAM_REG_TG_SEN_MODE(reg_module),
 		(ISP_RD32(CAM_REG_TG_SEN_MODE(reg_module)) | 0x1));
 	ISP_WR32(CAM_REG_TG_VF_CON(reg_module),
 		(ISP_RD32(CAM_REG_TG_VF_CON(reg_module)) | 0x1));
-	LOG_NOTICE("turn on TG VF, CMOS to do CQ recover 0x%x, 0x%x",
+	LOG_DBG("turn on TG VF, CMOS to do CQ recover 0x%x, 0x%x",
 		(unsigned int)ISP_RD32(CAM_REG_TG_SEN_MODE(reg_module)),
 		(unsigned int)ISP_RD32(CAM_REG_TG_VF_CON(reg_module)));
 EXIT_CQ_RECOVER:
-		LOG_NOTICE("-CQ recover");
+		LOG_DBG("-CQ recover");
 		/**/
 	}
 	return 0;

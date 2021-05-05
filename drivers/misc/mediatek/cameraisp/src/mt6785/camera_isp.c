@@ -782,10 +782,10 @@ static struct SV_LOG_STR gSvLog[ISP_IRQ_TYPE_AMOUNT];
 						'\0') { \
 						ptr[NORMAL_STR_LEN*(i+1) - 1] =\
 						'\0'; \
-						LOG_INF("%s", &ptr[\
+						LOG_DBG("%s", &ptr[\
 							NORMAL_STR_LEN*i]); \
 					} else { \
-						LOG_INF("%s", &ptr[\
+						LOG_DBG("%s", &ptr[\
 							NORMAL_STR_LEN*i]); \
 						break; \
 					} \
@@ -864,10 +864,10 @@ static struct SV_LOG_STR gSvLog[ISP_IRQ_TYPE_AMOUNT];
 						ptr[\
 						NORMAL_STR_LEN*(i+1) - 1] = \
 						'\0'; \
-						LOG_INF("%s", \
+						LOG_DBG("%s", \
 						&ptr[NORMAL_STR_LEN*i]); \
 					} else{ \
-						LOG_INF("%s", \
+						LOG_DBG("%s", \
 						&ptr[NORMAL_STR_LEN*i]); \
 						break; \
 					} \
@@ -3289,7 +3289,7 @@ static long ISP_ioctl(struct file *pFile,
 			 * user is implemented in ISP_WriteReg(...)
 			 */
 			if ((RegIo.Count) * sizeof(struct ISP_REG_STRUCT) > 0xFFFFF000) {
-				LOG_NOTICE("Error : RegIo.Count = %d", RegIo.Count);
+				LOG_DBG("Error : RegIo.Count = %d", RegIo.Count);
 				Ret = -EFAULT;
 				goto EXIT;
 			}
@@ -4459,10 +4459,10 @@ static long ISP_ioctl(struct file *pFile,
 				ISP_IRQ_TYPE_INT_CAM_A_ST))
 				g_virtual_cq_cnt[_cq_cnt[0]] = _cq_cnt[1];
 			else
-				LOG_NOTICE("invalid HW module(%d)\n",
+				LOG_DBG("invalid HW module(%d)\n",
 					_cq_cnt[0]);
 		} else {
-			LOG_NOTICE(
+			LOG_DBG(
 				"Virtual CQ count copy_from_user failed\n");
 			Ret = -EFAULT;
 		}
@@ -5419,7 +5419,7 @@ static int ISP_mmap(struct file *pFile, struct vm_area_struct *pVma)
 	case CAM_B_BASE_HW:
 	case CAM_C_BASE_HW:
 		if (length > ISP_REG_RANGE) {
-			LOG_DBG(
+			LOG_DBG(D
 				"mmap range error :module(0x%lx) length(0x%lx),ISP_REG_RANGE(0x%lx)!\n",
 				pfn, length, ISP_REG_RANGE);
 			return -EAGAIN;
