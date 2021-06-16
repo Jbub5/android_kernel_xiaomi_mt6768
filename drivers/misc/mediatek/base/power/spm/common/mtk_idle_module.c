@@ -193,7 +193,7 @@ enum idle_fp_step {
 int __attribute__((weak)) mtk_idle_trigger_wfi(
 	int idle_type, unsigned int idle_flag, int cpu)
 {
-	printk_deferred("[name:spm&]Power/swap %s is not implemented!\n"
+	pr_debug("[name:spm&]Power/swap %s is not implemented!\n"
 		, __func__);
 
 	do {

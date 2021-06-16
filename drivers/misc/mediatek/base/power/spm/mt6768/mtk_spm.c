@@ -224,13 +224,13 @@ static int spm_pm_event(struct notifier_block *notifier, unsigned long pm_event,
 		ret = spm_to_sspm_command(SPM_SUSPEND_PREPARE, &spm_d);
 		spin_unlock_irqrestore(&__spm_lock, flags);
 		if (ret < 0) {
-			printk_deferred("[name:spm&]#@# %s(%d) PM_SUSPEND_PREPARE return %d!!!\n",
+			pr_debug("[name:spm&]#@# %s(%d) PM_SUSPEND_PREPARE return %d!!!\n",
 				__func__, __LINE__, ret);
 			return NOTIFY_BAD;
 		}
 #endif /* CONFIG_MTK_TINYSYS_SSPM_SUPPORT */
 #endif
-		printk_deferred(
+		pr_debug(
 		"[name:spm&][SPM] PM: suspend entry %d-%02d-%02d %02d:%02d:%02d.%09lu UTC\n",
 			tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday,
 			tm.tm_hour, tm.tm_min, tm.tm_sec, ts.tv_nsec);
@@ -243,13 +243,13 @@ static int spm_pm_event(struct notifier_block *notifier, unsigned long pm_event,
 		ret = spm_to_sspm_command(SPM_POST_SUSPEND, &spm_d);
 		spin_unlock_irqrestore(&__spm_lock, flags);
 		if (ret < 0) {
-			printk_deferred("[name:spm&]#@# %s(%d) PM_POST_SUSPEND return %d!!!\n",
+			pr_debug("[name:spm&]#@# %s(%d) PM_POST_SUSPEND return %d!!!\n",
 				__func__, __LINE__, ret);
 			return NOTIFY_BAD;
 		}
 #endif /* CONFIG_MTK_TINYSYS_SSPM_SUPPORT */
 #endif
-		printk_deferred(
+		pr_debug(
 		"[name:spm&][SPM] PM: suspend exit %d-%02d-%02d %02d:%02d:%02d.%09lu UTC\n",
 			tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday,
 			tm.tm_hour, tm.tm_min, tm.tm_sec, ts.tv_nsec);
