@@ -916,6 +916,7 @@ static long tz_client_tee_service(struct file *file, unsigned long arg,
 			}
 
 			kfree(param[i].mem.buffer);
+			param[i].mem.buffer = NULL;
 			break;
 		}
 	}
