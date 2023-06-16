@@ -468,13 +468,9 @@ ccflags-y += -DGED_DVFS_DEBUG_BUF
 
 VER := eng
 
-ifneq ($(CONFIG_MTK_ENG_BUILD),y)
 VER := user
-ifeq ($(CONFIG_MTK_ENABLE_GMO), y)
 ccflags-y += -DGED_LOG_SIZE_LIMITED
 ccflags-y += -DGED_BUFFER_LOG_DISABLE
-endif
-endif
 
 ifeq ($(VER),eng)
 ccflags-y += -DGED_DEBUG_IOCTL_LOCK
