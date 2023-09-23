@@ -237,7 +237,6 @@ struct GED_KPI_MEOW_DVFS_FREQ_PRED {
 
 	int target_pid;
 	int target_fps;
-	int target_fps_margin;
 	int gpu_time;
 };
 static struct GED_KPI_MEOW_DVFS_FREQ_PRED *g_psMEOW;
@@ -1168,15 +1167,6 @@ static GED_BOOL ged_kpi_update_TargetTimeAndTargetFps(
 		psHead->frc_client = client;
 		ret = GED_TRUE;
 	}
-#ifdef GED_KPI_DEBUG
-		GED_LOGI("[GED_KPI] %s: FPSGO info PID:%d ,tfps:%d,",
-		"fps_margin:%d, cpu_time:%d\n",
-			__func__,
-			psHead->pid,
-			psHead->target_fps,
-			psHead->target_fps_margin,
-			psHead->t_cpu_fpsgo);
-#endif /* GED_KPI_DEBUG */
 	return ret;
 }
 /* ------------------------------------------------------------------- */
@@ -2690,34 +2680,26 @@ GED_ERROR ged_kpi_query_dvfs_freq_pred(int *gpu_freq_cur
 EXPORT_SYMBOL(ged_kpi_query_dvfs_freq_pred);
 
 /* ------------------------------------------------------------------- */
-GED_ERROR ged_kpi_query_gpu_dvfs_info(
-	struct GED_BRIDGE_OUT_QUERY_GPU_DVFS_INFO *out)
+/* For GiFT usage */
+GED_ERROR ged_kpi_query_gpu_dvfs_info(int *gpu_freq_cur
+, int *gpu_freq_max, int *gpu_freq_pred, int *target_fps, int *gpu_time)
 {
 #ifdef MTK_GED_KPI
-	if (out == NULL)
+	if (gpu_freq_cur == NULL
+			|| gpu_freq_max == NULL
+			|| gpu_freq_pred == NULL
+			|| gpu_time == NULL)
 		return GED_ERROR_FAIL;
 
-	out->gpu_freq_cur = g_psMEOW->gpu_freq_cur;
-	out->gpu_freq_max = g_psMEOW->gpu_freq_max;
-	out->gpu_freq_dvfs_pred = g_psMEOW->gpu_freq_pred;
-	out->target_fps = g_psMEOW->target_fps;
-	out->target_fps_margin = g_psMEOW->target_fps_margin;
-	out->gpu_time = (g_psMEOW->gpu_time == -1) ? -1 : g_psMEOW->gpu_time / 1000;
+	*gpu_freq_cur = g_psMEOW->gpu_freq_cur;
+	*gpu_freq_max = g_psMEOW->gpu_freq_max;
+	*gpu_freq_pred = g_psMEOW->gpu_freq_pred;
 
-#ifdef GED_KPI_DEBUG
-	GED_LOGI("[GED_KPI] %s: target_pid:%d, gpu_freq_cur:%d\n"
-		" gpu_freq_max:%d, gpu_freq_pred:%d, target_fps:%d\n"
-		" target_fps_margin:%d, gpu_time:%d, gift_ratio:%d\n",
-		__func__,
-		g_psMEOW->target_pid,
-		out->gpu_freq_cur,
-		out->gpu_freq_max,
-		out->gpu_freq_dvfs_pred,
-		out->target_fps,
-		out->target_fps_margin,
-		out->gpu_time,
-		g_psMEOW->gift_ratio);
-#endif /* GED_KPI_DEBUG */
+	*target_fps = g_psMEOW->target_fps;
+	if (g_psMEOW->gpu_time != -1)
+		*gpu_time = g_psMEOW->gpu_time / 1000; /* micro second*/
+	else
+		*gpu_time = -1;
 
 	return GED_OK;
 #else
