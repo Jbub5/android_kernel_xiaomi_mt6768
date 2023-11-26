@@ -37,8 +37,7 @@ config MTK_MUSB_DRV_36BIT
 	  If unsure, say N.
 
 config MTK_REVERSE_CHG_ENABLE
-	bool "MTK_REVERSE_CHG_ENABLE"
-	prompt "reverse support"
+	bool "MediaTek Reverse charging support"
 	default n
 	help
 	  reverse charger enable if Y . IF unuser Say N.
