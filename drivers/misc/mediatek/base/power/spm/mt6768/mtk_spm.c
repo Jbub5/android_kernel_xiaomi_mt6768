@@ -39,7 +39,9 @@ DEFINE_SPINLOCK(__spm_lock);
 /* Note: implemented in mtk_spm_dram.c */
 int __attribute__ ((weak)) spm_get_spmfw_idx(void)
 {
+#ifdef CONFIG_MTK_AEE_FEATURE
 	aee_sram_printk("NO %s !!!\n", __func__);
+#endif
 	pr_info("[SPM] NO %s !!!\n", __func__);
 	return 1;
 }
@@ -47,7 +49,9 @@ int __attribute__ ((weak)) spm_get_spmfw_idx(void)
 /* Note: implemented in mtk_spm_irq.c */
 int __attribute__ ((weak)) mtk_spm_irq_register(unsigned int spmirq0)
 {
+#ifdef CONFIG_MTK_AEE_FEATURE
 	aee_sram_printk("NO %s !!!\n", __func__);
+#endif
 	pr_info("[SPM] NO %s !!!\n", __func__);
 	return 0;
 }
@@ -58,14 +62,18 @@ int __attribute__ ((weak)) mtk_cpuidle_init(void) { return -EOPNOTSUPP; }
 /* Note: implemented in mtk_spm_dram.c */
 void __attribute__((weak)) spm_do_dram_config_check(void)
 {
+#ifdef CONFIG_MTK_AEE_FEATURE
 	aee_sram_printk("NO %s !!!\n", __func__);
+#endif
 	pr_info("[SPM] NO %s !!!\n", __func__);
 }
 
 /* Note: implemented in mtk_spm_fs.c */
 int __attribute__((weak)) spm_fs_init(void)
 {
+#ifdef CONFIG_MTK_AEE_FEATURE
 	aee_sram_printk("NO %s !!!\n", __func__);
+#endif
 	pr_info("[SPM] NO %s !!!\n", __func__);
 	return 0;
 }

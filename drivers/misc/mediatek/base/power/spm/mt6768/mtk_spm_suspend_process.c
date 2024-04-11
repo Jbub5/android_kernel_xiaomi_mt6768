@@ -80,8 +80,10 @@ void spm_set_sysclk_settle(void)
 	settle = spm_read(SPM_CLK_SETTLE);
 
 	/* md_settle is keyword for suspend status */
+#ifdef CONFIG_MTK_AEE_FEATURE
 	aee_sram_printk("md_settle = %u, settle = %u\n",
 		SPM_SYSCLK_SETTLE, settle);
+#endif
 	printk_deferred("[name:spm&][SPM] md_settle = %u, settle = %u\n",
 		SPM_SYSCLK_SETTLE, settle);
 }
@@ -117,7 +119,9 @@ void spm_suspend_pre_process(int cmd, struct pwr_ctrl *pwrctrl)
 
 	ret = spm_to_sspm_command(cmd, &spm_d);
 	if (ret < 0) {
+#ifdef CONFIG_MTK_AEE_FEATURE
 		aee_sram_printk("ret %d", ret);
+#endif
 		printk_deferred("[name:spm&][SPM] ret %d", ret);
 	}
 #endif
@@ -157,7 +161,9 @@ void spm_suspend_post_process(int cmd, struct pwr_ctrl *pwrctrl)
 
 	ret = spm_to_sspm_command(cmd, &spm_d);
 	if (ret < 0) {
+#ifdef CONFIG_MTK_AEE_FEATURE
 		aee_sram_printk("ret %d", ret);
+#endif
 		printk_deferred("[name:spm&][SPM] ret %d", ret);
 	}
 #endif /* CONFIG_MTK_TINYSYS_SSPM_SUPPORT */
