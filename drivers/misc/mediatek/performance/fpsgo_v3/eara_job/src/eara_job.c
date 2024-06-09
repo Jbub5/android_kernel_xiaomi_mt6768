@@ -74,7 +74,6 @@ static int ai_bench;
 
 static DEFINE_MUTEX(eara_lock);
 
-static struct dentry *eara_debugfs_dir;
 static int get_pwr_tbl_done;
 static void get_pwr_tbl(void);
 #define NR_FREQ_CPU 16
@@ -1391,38 +1390,7 @@ static const struct file_operations eara_pwr_tbl_fops = {
 
 static int __init init_eara_job(void)
 {
-
-	if (!fpsgo_debugfs_dir)
-		goto err;
-
-	eara_debugfs_dir = debugfs_create_dir("eara",
-			fpsgo_debugfs_dir);
-
-	if (!eara_debugfs_dir)
-		goto err;
-
-	debugfs_create_file("pwr_tbl",
-			0664,
-			eara_debugfs_dir,
-			NULL,
-			&eara_pwr_tbl_fops);
-
-	debugfs_create_file("status",
-			0664,
-			eara_debugfs_dir,
-			NULL,
-			&eara_status_fops);
-
-	debugfs_create_file("ai_bench",
-			0664,
-			eara_debugfs_dir,
-			NULL,
-			&eara_ai_bench_fops);
-
 	return 0;
-
-err:
-	return -1;
 }
 
 late_initcall(init_eara_job);

@@ -43,7 +43,7 @@ VDSO_LDFLAGS := \
 	-Wl,-Bsymbolic -Wl,--no-undefined -Wl,-soname=linux-vdso.so.1 \
 	-nostdlib -shared \
 	$(call cc-ldoption, -Wl$(comma)--hash-style=sysv) \
-	$(call cc-ldoption, -Wl$(comma)--build-id)
+	$(call cc-ldoption, -Wl$(comma)--build-id=sha1)
 
 GCOV_PROFILE := n
 

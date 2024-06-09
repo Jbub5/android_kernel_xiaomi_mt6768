@@ -364,8 +364,9 @@ static int mt_usb_get_property(struct power_supply *psy,
 	case POWER_SUPPLY_PROP_TYPEC_MODE:
 		if (tcpc->ops->get_mode != NULL) {
 		tcpc->ops->get_mode(tcpc, &typec_mode);
-		if (typec_mode > 2 || typec_mode < 0)
-			typec_mode == 0;
+		if (typec_mode > 2 || typec_mode < 0){
+			typec_mode = 0;
+		}
 		val->intval = typec_mode;
 		}
 		break;

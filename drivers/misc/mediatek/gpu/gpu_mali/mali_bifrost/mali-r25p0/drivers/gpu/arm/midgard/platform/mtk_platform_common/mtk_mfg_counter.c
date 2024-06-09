@@ -428,8 +428,7 @@ static void _mtk_mfg_reset_counter(int ret)
 		return;
 
 	for (i = 0; i < number_of_hardware_counters; i++) {
-		if (ret == 1)
-			mali_pmus[i].value = 0;
+		mali_pmus[i].value = 0;
 		mali_pmus[i].overflow  = 0;
 	}
 }
@@ -440,8 +439,9 @@ static void _mtk_mfg_init_counter(void)
 
 	empty_hwc_cnt = 0;
 	hardware_counter_names = kbase_gator_hwcnt_init_names(&cnt);
-	if ((hardware_counter_names == NULL) || (cnt <= 0))
+	if ((hardware_counter_names == NULL) || (cnt <= 0)) {
 		return;
+	}
 
 	/* Default doesn't enable all HWC */
 	info.bitmask[0] = 0x57; /* JM */
@@ -499,8 +499,9 @@ static int _mtk_mfg_update_counter(void)
 	ret = timd_diff_us = gpu_freq = active_cycle = 0;
 	status = kbase_gator_instr_hwcnt_dump_complete(handle, &success);
 
-	if (!status || !success)
+	if (!status || !success) {
 		ret = PMU_NG;
+	}
 
 	if (ret != PMU_NG) {
 

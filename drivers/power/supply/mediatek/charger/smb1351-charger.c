@@ -431,7 +431,7 @@ enum usbsw_state {
 	USBSW_USB,
 };
 
-static const enum power_supply_type const smblib_apsd_results[] = {
+static enum power_supply_type const smblib_apsd_results[] = {
 	POWER_SUPPLY_TYPE_UNKNOWN,
 	POWER_SUPPLY_TYPE_USB,
 	POWER_SUPPLY_TYPE_USB_CDP,
@@ -2463,7 +2463,7 @@ static int smb1351_plug_out(struct charger_device *chg_dev)
 {
 	struct smb1351_charger *chip = dev_get_drvdata(&chg_dev->dev);
 //	struct charger_manager *cm = chip->chg_consumer->cm;
-	int rc;
+	// int rc;
 	pr_err("%s \n", __func__);
 
 	chip->hvdcp_type = HVDCP_NULL;
@@ -2480,8 +2480,8 @@ static int smb1351_plug_out(struct charger_device *chg_dev)
 	cancel_delayed_work_sync(&chip->hvdcp_500_mode_check_work);
 	/* Disable SW conn therm Regulation */
 //	rc = smblib_set_sw_conn_therm_regulation(chip, false);
-	if (rc < 0)
-		pr_err("Couldn't stop SW conn therm rc=%d\n", rc);
+	// if (rc < 0)
+	// 	pr_err("Couldn't stop SW conn therm rc=%d\n", rc);
 
 	return 0;
 }

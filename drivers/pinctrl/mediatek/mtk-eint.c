@@ -88,9 +88,12 @@ static int mtk_eint_flip_edge(struct mtk_eint *eint, int hwirq)
 {
 	int start_level, curr_level;
 	unsigned int reg_offset;
-	u32 mask = BIT(hwirq & 0x1f);
-	u32 port = (hwirq >> 5) & eint->hw->port_mask;
-	void __iomem *reg = eint->base + (port << 2);
+	u32 mask, port;
+	void __iomem *reg;
+
+	mask = BIT(hwirq & 0x1f);
+	port = (hwirq >> 5) & eint->hw->port_mask;
+	reg = eint->base + (port << 2);
 
 	curr_level = eint->gpio_xlate->get_gpio_state(eint->pctl, hwirq);
 
@@ -112,13 +115,15 @@ static int mtk_eint_flip_edge(struct mtk_eint *eint, int hwirq)
 static void mtk_eint_mask(struct irq_data *d)
 {
 	struct mtk_eint *eint = irq_data_get_irq_chip_data(d);
+	u32 mask;
+	void __iomem *reg;
 
 	if (!eint)
 		return;
 
-	u32 mask = BIT(d->hwirq & 0x1f);
-	void __iomem *reg = mtk_eint_get_offset(eint, d->hwirq,
-						eint->regs->mask_set);
+	mask = BIT(d->hwirq & 0x1f);
+	reg = mtk_eint_get_offset(eint, d->hwirq,
+				eint->regs->mask_set);
 
 	eint->cur_mask[d->hwirq >> 5] &= ~mask;
 
@@ -128,9 +133,11 @@ static void mtk_eint_mask(struct irq_data *d)
 static void mtk_eint_unmask(struct irq_data *d)
 {
 	struct mtk_eint *eint = irq_data_get_irq_chip_data(d);
-	u32 mask = BIT(d->hwirq & 0x1f);
-	void __iomem *reg = mtk_eint_get_offset(eint, d->hwirq,
-						eint->regs->mask_clr);
+	u32 mask;
+	void __iomem *reg;
+	mask = BIT(d->hwirq & 0x1f);
+	reg = mtk_eint_get_offset(eint, d->hwirq,
+				eint->regs->mask_clr);
 
 	eint->cur_mask[d->hwirq >> 5] |= mask;
 

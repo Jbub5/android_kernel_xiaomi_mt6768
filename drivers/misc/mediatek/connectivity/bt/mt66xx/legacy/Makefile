@@ -4,6 +4,7 @@ MTK_PLATFORM := $(subst ",,$(CONFIG_MTK_PLATFORM))
 
 ###############################################################################
 # Necessary Check
+ccflags-y += -Wno-unused-variable
 
 ifneq ($(KERNEL_OUT),)
     ccflags-y += -imacros $(KERNEL_OUT)/include/generated/autoconf.h

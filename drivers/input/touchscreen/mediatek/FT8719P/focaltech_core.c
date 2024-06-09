@@ -488,7 +488,7 @@ static int fts_input_report_b(struct fts_ts_data *data)
 		input_mt_report_slot_state(data->input_dev, MT_TOOL_FINGER, false);
 	data->touchs &= ~BIT(events[i].id);
 	if (data->log_level >= 1) {
-		("[B]P%d UP!", events[i].id);
+		// ("[B]P%d UP!", events[i].id);
 		}
 	}
     }

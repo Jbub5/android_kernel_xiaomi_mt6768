@@ -1,14 +1,6 @@
+/* SPDX-License-Identifier: GPL-2.0 */
 /*
- * Copyright (C) 2015 MediaTek Inc.
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 as
- * published by the Free Software Foundation.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
+ * Copyright (C) 2019 MediaTek Inc.
  */
 
 #ifndef __MTK_GPU_UTILITY_H__
@@ -27,7 +19,7 @@ MTK_GPU_DVFS_TYPE_ITEM(TOUCHBOOST) \
 MTK_GPU_DVFS_TYPE_ITEM(THERMAL) \
 MTK_GPU_DVFS_TYPE_ITEM(CUSTOMIZATION)}
 
-typedef enum MTK_GPU_DVFS_TYPE_TAG
+enum MTK_GPU_DVFS_TYPE_TAG
 #define MTK_GPU_DVFS_TYPE_ITEM(type) MTK_GPU_DVFS_TYPE_##type,
 MTK_GPU_DVFS_TYPE_LIST
 #undef MTK_GPU_DVFS_TYPE_ITEM
@@ -99,21 +91,20 @@ bool mtk_get_gpu_dvfs_cal_freq(unsigned long *pulGpu_tar_freq);
 bool mtk_enable_gpu_perf_monitor(bool enable);
 
 /* GPU PMU should be implemented by GPU IP-dep code */
-typedef struct {
+struct GPU_PMU {
 	int id;
 	const char *name;
 	unsigned int value;
 	int overflow;
-} GPU_PMU;
+};
 bool mtk_get_gpu_pmu_init(GPU_PMU *pmus, int pmu_size, int *ret_size);
 bool mtk_get_gpu_pmu_swapnreset(GPU_PMU *pmus, int pmu_size);
 bool mtk_get_gpu_pmu_deinit(void);
 bool mtk_get_gpu_pmu_swapnreset_stop(void);
 
-typedef void (*gpu_power_change_notify_fp)(int power_on);
 
 bool mtk_register_gpu_power_change(const char *name,
-	gpu_power_change_notify_fp callback);
+	void (*callback)(int power_on));
 bool mtk_unregister_gpu_power_change(const char *name);
 
 /* GPU POWER NOTIFY should be called by GPU only */

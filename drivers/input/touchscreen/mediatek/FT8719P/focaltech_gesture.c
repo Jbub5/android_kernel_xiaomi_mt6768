@@ -403,10 +403,11 @@ int fts_gesture_suspend(struct fts_ts_data *ts_data)
 		break;
 	}
 
-    if (i >= 5)
-	FTS_ERROR("make IC enter into gesture(suspend) fail,state:%x", state);
-    else
-	FTS_INFO("Enter into gesture(suspend) successfully");
+    if (i >= 5) {
+		FTS_ERROR("make IC enter into gesture(suspend) fail,state:%x", state);
+	} else {
+		FTS_INFO("Enter into gesture(suspend) successfully");
+	}
 
     FTS_FUNC_EXIT();
     return 0;
@@ -430,10 +431,11 @@ int fts_gesture_resume(struct fts_ts_data *ts_data)
 		break;
 	}
 
-    if (i >= 5)
-	FTS_ERROR("make IC exit gesture(resume) fail,state:%x", state);
-    else
-	FTS_INFO("resume from gesture successfully");
+    if (i >= 5) {
+		FTS_ERROR("make IC exit gesture(resume) fail,state:%x", state);
+	} else {
+		FTS_INFO("resume from gesture successfully");
+	}
 
 	FTS_FUNC_EXIT();
     return 0;

@@ -52,3 +52,7 @@ ifeq ($(CONFIG_MTK_TRUSTED_MEMORY_SUBSYSTEM),y)
 cflags-y += -I$(srctree)/drivers/misc/mediatek/secmem/includes
 include $(srctree)/drivers/misc/mediatek/trusted_mem/Makefile.include
 endif
+
+ccflags-y += -Wno-unused-value
+ccflags-y += -Wno-unused-variable
+ccflags-y += -Wno-comment

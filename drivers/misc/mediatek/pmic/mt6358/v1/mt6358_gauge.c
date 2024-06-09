@@ -1031,11 +1031,11 @@ static int fgauge_read_current(
 		bm_trace("[%s]curr(charging) = %d mA\r\n",
 		__func__,
 			 dvalue);
-	else
+	else {
 		bm_trace("[%s]curr(discharging) = %d mA\r\n",
 		__func__,
 			 dvalue);
-
+        }
 		/* Auto adjust value */
 		if (gauge_dev->fg_cust_data->r_fg_value != 100) {
 			bm_trace(

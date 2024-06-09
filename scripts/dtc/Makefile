@@ -1,5 +1,6 @@
 # SPDX-License-Identifier: GPL-2.0
 # scripts/dtc makefile
+HOST_EXTRACFLAGS += -DNO_YAML
 
 hostprogs-y	:= dtc
 always		:= $(hostprogs-y)
@@ -27,6 +28,3 @@ HOSTCFLAGS_dtc-parser.tab.o := $(HOSTCFLAGS_DTC)
 
 # dependencies on generated files need to be listed explicitly
 $(obj)/dtc-lexer.lex.o: $(obj)/dtc-parser.tab.h
-
-# generated files need to be cleaned explicitly
-clean-files	:= dtc-lexer.lex.c dtc-parser.tab.c dtc-parser.tab.h
