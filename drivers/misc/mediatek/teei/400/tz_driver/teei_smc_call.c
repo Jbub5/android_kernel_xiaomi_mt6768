@@ -26,6 +26,9 @@
 #include "nt_smc_call.h"
 #include "teei_client_main.h"
 
+#ifdef IMSG_TAG
+#undef IMSG_TAG
+#endif
 #define IMSG_TAG "[tz_driver]"
 
 int teei_forward_call(unsigned long long cmd, unsigned long long cmd_addr,
