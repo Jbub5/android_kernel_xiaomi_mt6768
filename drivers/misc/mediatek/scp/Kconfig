@@ -11,7 +11,7 @@ config MTK_TINYSYS_SCP_SUPPORT
 config MTK_TINYSYS_SCP_LOGGER_SUPPORT
 	bool "SCP Logger support"
 	depends on MTK_TINYSYS_SCP_SUPPORT
-	default y
+	default n
 	help
 	  This is debug feature: SCP logger on/off option.
 	  Set Y to enable this feature.

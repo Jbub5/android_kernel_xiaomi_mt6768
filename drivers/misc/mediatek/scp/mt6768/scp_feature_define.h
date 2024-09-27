@@ -17,7 +17,11 @@
 
 /* scp platform configs*/
 #define SCP_BOOT_TIME_OUT_MONITOR	(1)
+#ifdef MTK_TINYSYS_SCP_LOGGER_SUPPORT
 #define SCP_LOGGER_ENABLE		(1)
+#else
+#define SCP_LOGGER_ENABLE		(0)
+#endif
 #define SCP_DVFS_INIT_ENABLE		(1)
 #define SCP_VOW_LOW_POWER_MODE		(0)
 #define SCP_RESERVED_MEM		(1)
