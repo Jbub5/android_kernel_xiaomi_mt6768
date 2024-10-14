@@ -491,7 +491,9 @@ void otg_thermal_limit(void)
 		return;
 	}
 	if (!primary_charger) {
+#ifdef CONFIG_MTK_ENG_BUILD
 		pr_err("primary_charger is NULL\n");
+#endif
 		primary_charger = get_charger_by_name("primary_chg");
 	}
 
@@ -735,7 +737,9 @@ void battery_update(struct battery_data *bat_data)
 	bool chg_done = false;
 
 	if (!primary_charger) {
+#ifdef CONFIG_MTK_ENG_BUILD
 		pr_err("primary_charger is NULL\n");
+#endif
 		primary_charger = get_charger_by_name("primary_chg");
 	}
 	charger_dev_is_charging_done(primary_charger, &chg_done);
@@ -4211,7 +4215,9 @@ static void otg_boost_limit_work(struct work_struct *work)
 	current_now = fgcurrent * 100;
 	pr_err("dhx--state:%d--current now = %d\n", b_ischarging, current_now);
 	if (!primary_charger) {
+#ifdef CONFIG_MTK_ENG_BUILD
 		pr_err("primary_charger is NULL\n");
+#endif
 		primary_charger = get_charger_by_name("primary_chg");
 	}
 	if (otg_limit == 1) {

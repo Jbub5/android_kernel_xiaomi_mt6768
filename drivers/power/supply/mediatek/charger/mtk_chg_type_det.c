@@ -374,7 +374,9 @@ static int mt_usb_get_property(struct power_supply *psy,
 		val->intval = typec_cc_orientation;
 		break;
 	case POWER_SUPPLY_PROP_REAL_TYPE:
+#ifdef CONFIG_MTK_ENG_BUILD
 		pr_err("dhx--hvdcp:%d\n", hvdcp_type_tmp);
+#endif
 		if (hvdcp_type_tmp == HVDCP_3) {
 			val->intval = POWER_SUPPLY_TYPE_USB_HVDCP_3;
 			break;
