@@ -40,11 +40,13 @@ int __attribute__((weak)) mtk_idle_cond_append_info(
 /* idle ratio */
 static bool idle_ratio_en;
 static unsigned long long idle_ratio_profile_start_time;
+#ifdef CONFIG_MTK_ENG_BUILD
 static unsigned long long idle_ratio_profile_duration;
 
 /* idle block information */
 static unsigned long long idle_cnt_dump_prev_time;
 static unsigned int idle_cnt_dump_criteria = 5000;          /* 5 sec */
+#endif
 
 /*External weak functions: implemented in mtk_cpufreq_api.c*/
 unsigned int __attribute__((weak))
@@ -59,7 +61,9 @@ struct mtk_idle_buf {
 	char *p_idx;
 };
 
+#ifdef CONFIG_MTK_ENG_BUILD
 static struct mtk_idle_buf idle_log;
+#endif
 static struct mtk_idle_buf idle_state_log;
 
 #define reset_idle_buf(idle) \
@@ -109,6 +113,7 @@ static DEFINE_SPINLOCK(idle_dump_cnt_spin_lock);
 
 void mtk_idle_dump_cnt_in_interval(void)
 {
+#ifdef CONFIG_MTK_ENG_BUILD
 	unsigned long long idle_cnt_dump_curr_time = 0;
 	unsigned long flags;
 	bool dump_log = false;
@@ -154,6 +159,7 @@ void mtk_idle_dump_cnt_in_interval(void)
 			, get_log());
 		idle_ratio_profile_start_time = idle_get_current_time_ms();
 	}
+#endif
 }
 
 void mtk_idle_block_reason_report(struct MTK_IDLE_MODEL_CLERK const *clerk)
