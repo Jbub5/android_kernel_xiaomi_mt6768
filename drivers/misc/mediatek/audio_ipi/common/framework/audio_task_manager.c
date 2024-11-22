@@ -93,7 +93,7 @@ static char *get_feature_name(const uint8_t task_scene)
 	case TASK_SCENE_VOIP:
 	case TASK_SCENE_SPEAKER_PROTECTION:
 	default: {
-		pr_notice("%s not support task %d", __func__, task_scene);
+		pr_debug("%s not support task %d", __func__, task_scene);
 		break;
 	}
 	}
@@ -125,7 +125,7 @@ static char *get_do_name(const uint8_t task_scene)
 	case TASK_SCENE_VOIP:
 	case TASK_SCENE_SPEAKER_PROTECTION:
 	default: {
-		pr_notice("%s not support task %d", __func__, task_scene);
+		pr_debug("%s not support task %d", __func__, task_scene);
 		break;
 	}
 	}
