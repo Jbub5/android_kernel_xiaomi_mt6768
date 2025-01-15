@@ -1,7 +1,7 @@
 config MTK_ATF_LOGGER
 	bool "atf logger kernel driver"
 	depends on HAVE_ARM_SMCCC && OF
-	default y
+	default n
 	help
 	  Arm Trusted Firmwear Logger that designed by Mediatek is a logger
 	  which can read log from ATF.
