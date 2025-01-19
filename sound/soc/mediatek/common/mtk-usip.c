@@ -104,7 +104,7 @@ static long usip_ioctl(struct file *fp, unsigned int cmd, unsigned long arg)
 	case SET_USIP_ADSP_PHONE_CALL_ENH_CONFIG:
 		if (copy_from_user(&(usip.adsp_phone_call_enh_config), (void __user *)arg,
 			sizeof(usip.adsp_phone_call_enh_config))) {
-			pr_info("%s(), Fail copy CALL_ENH_CONFIG from user Ptr: %x",
+			pr_info("%s(), Fail copy CALL_ENH_CONFIG from user Ptr: %lx",
 				__func__,
 				arg);
 			ret = -1;
