@@ -80,7 +80,7 @@ static ssize_t richtek_spm_class_attr_show(struct class *cls,
 	const ptrdiff_t offset = attr - richtek_spm_class_attrs;
 	int ret = 0;
 
-	pr_info("%s: %d\n", __func__, offset);
+	pr_info("%s: %ld\n", __func__, offset);
 
 	switch (offset) {
 	case RICHTEK_SPM_CLASS_STATUS:
@@ -226,7 +226,7 @@ static ssize_t richtek_spm_class_attr_store(struct class *cls,
 	u32 tmp = 0;
 	int ret = 0;
 
-	pr_info("%s: %d\n", __func__, offset);
+	pr_info("%s: %ld\n", __func__, offset);
 	switch (offset) {
 	case RICHTEK_SPM_CLASS_STATUS:
 		ret = kstrtou32(buf, 0, &tmp);
@@ -371,7 +371,7 @@ static ssize_t richtek_spm_dev_attr_show(struct device *dev,
 	const ptrdiff_t offset = attr - richtek_spm_dev_attrs;
 	int ret = -EINVAL;
 
-	dev_info(dev, "%s: %d\n", __func__, offset);
+	dev_info(dev, "%s: %ld\n", __func__, offset);
 
 	mutex_lock(&rdc->var_lock);
 	switch (offset) {
