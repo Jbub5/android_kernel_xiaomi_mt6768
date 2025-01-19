@@ -1060,7 +1060,7 @@ static size_t mtk_btag_seq_sub_show_usedmem(char **buff, unsigned long *size,
 		size_l = BLOCKIO_AEE_BUFFER_SIZE;
 	else
 		size_l = 0;
-	SPREAD_PRINTF(buff, size, seq, "%s aee buffer: %d bytes\n", btag->name,
+	SPREAD_PRINTF(buff, size, seq, "%s aee buffer: %ld bytes\n", btag->name,
 			size_l);
 	used_mem += size_l;
 
