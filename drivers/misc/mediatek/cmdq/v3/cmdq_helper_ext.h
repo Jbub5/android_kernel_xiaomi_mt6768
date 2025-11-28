@@ -83,12 +83,16 @@ do {			\
 	} \
 } while (0)
 
+#ifdef CONFIG_MTK_ENG_BUILD
 #define CMDQ_VERBOSE(string, args...) \
 do { \
 	if (cmdq_core_should_print_msg()) { \
 		pr_debug("[CMDQ]"string, ##args); \
 	} \
 } while (0)
+#else
+#define CMDQ_VERBOSE(string, args...) ((void)0)
+#endif
 
 
 #define CMDQ_ERR(string, args...) \
