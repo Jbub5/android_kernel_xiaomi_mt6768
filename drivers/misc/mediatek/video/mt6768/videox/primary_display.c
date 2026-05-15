@@ -8477,7 +8477,7 @@ int primary_display_setlcm_cmd(unsigned int *lcm_cmd, unsigned int *lcm_count,
 	}
 
 	_primary_path_unlock(__func__);
-	_primary_path_switch_dst_lock();
+	_primary_path_switch_dst_unlock();
 
 	mmprofile_log_ex(ddp_mmp_get_events()->primary_set_cmd,
 		MMPROFILE_FLAG_END, 0, 0);
