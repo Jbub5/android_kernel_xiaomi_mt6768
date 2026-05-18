@@ -161,6 +161,46 @@ static int tee_ioctl_version(struct tee_context *ctx,
 	return 0;
 }
 
+#ifdef CONFIG_MICROTRUST_LEGACY_IOCTL
+static int tee_ioctl_shm_alloc(struct tee_context *ctx,
+			       struct tee_ioctl_shm_alloc_data __user *udata)
+{
+	long ret;
+	struct tee_ioctl_shm_alloc_data data;
+	struct tee_shm *shm;
+
+	if (copy_from_user(&data, udata, sizeof(data)))
+		return -EFAULT;
+
+	/* Currently no input flags are supported */
+	if (data.flags)
+		return -EINVAL;
+
+	data.id = -1;
+
+	shm = isee_shm_alloc(ctx, data.size, TEE_SHM_MAPPED | TEE_SHM_DMA_BUF);
+	if (IS_ERR(shm))
+		return PTR_ERR(shm);
+
+	data.id = shm->id;
+	data.flags = shm->flags;
+	data.size = shm->size;
+
+	if (copy_to_user(udata, &data, sizeof(data)))
+		ret = -EFAULT;
+	else
+		ret = isee_shm_get_fd(shm);
+
+	/*
+	 * When user space closes the file descriptor the shared memory
+	 * should be freed or if isee_shm_get_fd() failed then it will
+	 * be freed immediately.
+	 */
+	isee_shm_put(shm);
+	return ret;
+}
+#endif
+
 #ifdef CONFIG_MICROTRUST_TEST_DRIVERS
 
 static inline void flush_shm_dcache(void *start, size_t len)
@@ -674,6 +714,7 @@ static int tee_ioctl_set_hostname(struct tee_context *ctx,
 	return 0;
 }
 
+#ifndef CONFIG_MICROTRUST_LEGACY_IOCTL
 static int tee_ioctl_shm_id(struct tee_context *ctx, unsigned long uaddr)
 {
 	struct tee_device *teedev = ctx->teedev;
@@ -716,6 +757,7 @@ static int tee_ioctl_shm_release(struct tee_context *ctx, unsigned long arg)
 
 	return 0;
 }
+#endif
 
 long tee_ioctl(struct file *filp, unsigned int cmd, unsigned long arg)
 {
@@ -732,12 +774,18 @@ long tee_ioctl(struct file *filp, unsigned int cmd, unsigned long arg)
 	case TEE_IOC_VERSION:
 		retVal = tee_ioctl_version(ctx, uarg);
 		break;
+#ifdef CONFIG_MICROTRUST_LEGACY_IOCTL
+	case TEE_IOC_SHM_ALLOC:
+		retVal = tee_ioctl_shm_alloc(ctx, uarg);
+		break;
+#else
 	case TEE_IOC_SHM_RELEASE:
 		retVal = tee_ioctl_shm_release(ctx, arg);
 		break;
 	case TEE_IOC_SHM_ID:
 		retVal = tee_ioctl_shm_id(ctx, arg);
 		break;
+#endif
 #ifdef CONFIG_MICROTRUST_TEST_DRIVERS
 	case TEE_IOC_SHM_KERN_OP:
 		retVal = tee_ioctl_shm_kern_op(ctx, uarg);
@@ -779,6 +827,7 @@ long tee_ioctl(struct file *filp, unsigned int cmd, unsigned long arg)
 	return retVal;
 }
 
+#ifndef CONFIG_MICROTRUST_LEGACY_IOCTL
 static int tee_mmap(struct file *filp, struct vm_area_struct *vma)
 {
 	size_t size = vma->vm_end - vma->vm_start;
@@ -809,6 +858,7 @@ exit:
 
 	return retVal;
 }
+#endif
 
 static const struct file_operations tee_fops = {
 	.owner = THIS_MODULE,
@@ -818,7 +868,9 @@ static const struct file_operations tee_fops = {
 #ifdef CONFIG_COMPAT
 	.compat_ioctl = tee_ioctl,
 #endif
+#ifndef CONFIG_MICROTRUST_LEGACY_IOCTL
 	.mmap = tee_mmap,
+#endif
 };
 
 static void tee_release_device(struct device *dev)
