@@ -902,7 +902,7 @@ struct IMGSENSOR_HW_POWER_SEQ sensor_power_sequence[] = {
 			{SensorMCLK, Vol_High, 10},
 		},
 	},
- #endif
+#endif
 #if defined(OV2180_MIPI_RAW)
 	{
 		SENSOR_DRVNAME_OV2180_MIPI_RAW,
@@ -915,7 +915,7 @@ struct IMGSENSOR_HW_POWER_SEQ sensor_power_sequence[] = {
 			{SensorMCLK, Vol_High, 5},
 		},
 	},
- #endif
+#endif
 #if defined(OV2180_SUNNY_MIPI_RAW)
 	{
 		SENSOR_DRVNAME_OV2180_SUNNY_MIPI_RAW,
@@ -928,7 +928,7 @@ struct IMGSENSOR_HW_POWER_SEQ sensor_power_sequence[] = {
 			{SensorMCLK, Vol_High, 5},
 		},
 	},
- #endif
+#endif
 	/* add new sensor before this line */
 	{NULL,},
 };

@@ -71,6 +71,7 @@ enum IMGSENSOR_HW_PIN_STATE {
 	/* For backward compatible */
 #define	SensorMCLK  IMGSENSOR_HW_PIN_MCLK
 
+
 #define	Vol_Low   IMGSENSOR_HW_PIN_STATE_LEVEL_0
 #define Vol_High  IMGSENSOR_HW_PIN_STATE_LEVEL_HIGH
 #define	Vol_1000  IMGSENSOR_HW_PIN_STATE_LEVEL_1000
