@@ -131,7 +131,11 @@ enum ACDK_CAMERA_OPERATION_MODE_ENUM {
  ************************************************************************/
 
 /*  */
+#if !defined(CONFIG_TARGET_PRODUCT_LANCELOTCOMMON) && !defined(CONFIG_TARGET_PRODUCT_MERLINCOMMON) && !defined(CONFIG_TARGET_PRODUCT_SELENECOMMON)
 #define MAX_NUM_OF_SUPPORT_SENSOR 16
+#else
+#define MAX_NUM_OF_SUPPORT_SENSOR 11
+#endif
 /*  */
 #define SENSOR_CLOCK_POLARITY_HIGH    0
 #define SENSOR_CLOCK_POLARITY_LOW 1
