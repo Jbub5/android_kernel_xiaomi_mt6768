@@ -42,7 +42,11 @@
 #define LOG_1 LOG_INF("OV2680_sunny,MIPI 1LANE\n")
 /****************************   Modify end    *******************************************/
 
+#ifdef CONFIG_MTK_ENG_BUILD
 #define LOG_INF(format, args...)    pr_debug(PFX "[%s] " format, __FUNCTION__, ##args)
+#else
+#define LOG_INF(fmt, args...) ((void)0)
+#endif
 
 static DEFINE_SPINLOCK(imgsensor_drv_lock);
 static kal_bool OV2680_sunny_DuringTestPattern = KAL_FALSE;

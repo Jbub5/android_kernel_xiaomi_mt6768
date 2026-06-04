@@ -48,8 +48,13 @@
 #include "ov13b10_qtech_mipiraw_Sensor.h"
 #include "cam_cal_define.h"
 #define PFX "OV13B10_QTECH_camera_sensor"
+#ifdef CONFIG_MTK_ENG_BUILD
 #define LOG_DBG(format, args...)    pr_debug(PFX "[%s] " format, __FUNCTION__, ##args)
 #define LOG_INF(format, args...)    pr_info(PFX "[%s] " format, __FUNCTION__, ##args)
+#else
+#define LOG_DBG(fmt, args...) ((void)0)
+#define LOG_INF(fmt, args...) ((void)0)
+#endif
 #define LOG_ERR(format, args...)    pr_err(PFX "[%s] " format, __FUNCTION__, ##args)
 
 #define MULTI_WRITE 1

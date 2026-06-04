@@ -46,7 +46,11 @@
 //#define LOG_WRN(format, args...) xlog_printk(ANDROID_LOG_WARN ,PFX, "[%S] " format, __FUNCTION__, ##args)
 //#defineLOG_INF(format, args...) xlog_printk(ANDROID_LOG_INFO ,PFX, "[%s] " format, __FUNCTION__, ##args)
 //#define LOG_DBG(format, args...) xlog_printk(ANDROID_LOG_DEBUG ,PFX, "[%S] " format, __FUNCTION__, ##args)
+#ifdef CONFIG_MTK_ENG_BUILD
 #define LOG_INF(format, args...)    pr_debug(PFX "[%s] " format, __func__, ##args)
+#else
+#define LOG_INF(fmt, args...) ((void)0)
+#endif
 
 static DEFINE_SPINLOCK(imgsensor_drv_lock);
 

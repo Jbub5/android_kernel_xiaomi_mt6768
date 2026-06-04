@@ -38,7 +38,11 @@
 #define PFX "GC02M1_macro_camera_sensor"
 #define LOG_1 LOG_INF("GC02M1_MACRO,MIPI 1LANE\n")
 
+#ifdef CONFIG_MTK_ENG_BUILD
 #define LOG_INF(format, args...)    pr_err(PFX "[%s] " format, __func__, ##args)
+#else
+#define LOG_INF(fmt, args...) ((void)0)
+#endif
 
 #define MULTI_WRITE    1
 static DEFINE_SPINLOCK(imgsensor_drv_lock);

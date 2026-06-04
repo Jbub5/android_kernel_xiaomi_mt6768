@@ -36,8 +36,12 @@
 #include <linux/gpio.h>
 
 #include "ov2180_qtech_mipi_raw_Sensor.h"
+#ifdef CONFIG_MTK_ENG_BUILD
 #define LOG_INF(format, args...)    \
 	printk(" ov2180_qtech_mipi_raw_Sensor [%s] " format, __func__, ##args)
+#else
+#define LOG_INF(fmt, args...) ((void)0)
+#endif
 
 #define MULTI_WRITE 1
 static DEFINE_SPINLOCK(imgsensor_drv_lock);

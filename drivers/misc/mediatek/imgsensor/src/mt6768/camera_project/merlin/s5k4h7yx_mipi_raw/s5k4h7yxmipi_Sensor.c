@@ -38,7 +38,11 @@
 
 
 #define PFX "s5k4h7yx_camera_sensor"
+#ifdef CONFIG_MTK_ENG_BUILD
 #define LOG_INF(format, args...) pr_err(PFX "[%s] " format, __func__, ##args)
+#else
+#define LOG_INF(fmt, args...) ((void)0)
+#endif
 
 
 static DEFINE_SPINLOCK(imgsensor_drv_lock);

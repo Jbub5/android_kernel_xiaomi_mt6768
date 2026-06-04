@@ -73,8 +73,13 @@ extern int dump_dualcam_cali_data_s5k3l6(void);
 #endif
 //modify dualcam FAE IDLHLYE-99 by wei.miao@reallytek.com 180619 end
 
+#ifdef CONFIG_MTK_ENG_BUILD
 #define LOG_INF(format, args...) pr_debug(PFX "[%s] " format, __func__, ##args)
 #define LOG_DBG(format, args...) pr_err(PFX "[%s] " format, __func__, ##args)
+#else
+#define LOG_INF(fmt, args...) ((void)0)
+#define LOG_DBG(fmt, args...) ((void)0)
+#endif
 
 /*
  * #define LOG_INF(format, args...) pr_debug(
