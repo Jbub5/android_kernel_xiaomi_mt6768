@@ -180,9 +180,15 @@ int fscrypt_prepare_inline_crypt_key(struct fscrypt_prepared_key *prep_key,
 	}
 
 	/* A flag which will set eMMC crypto data unit size as 512 or 4096 */
-	if (ci->ci_policy.version == FSCRYPT_POLICY_V2 &&
-		S_ISREG(inode->i_mode))
-		blk_key->base.hie_duint_size = 4096;
+	if (S_ISREG(inode->i_mode)) {
+		if (ci->ci_policy.version == FSCRYPT_POLICY_V2) {
+			blk_key->base.hie_duint_size = 4096;
+			blk_key->base.hie_legacy = false;
+		} else {
+			blk_key->base.hie_duint_size = 512;
+			blk_key->base.hie_legacy = true;
+		}
+	}
 
 	/*
 	 * We have to start using blk-crypto on all the filesystem's devices.
@@ -358,9 +364,18 @@ static void fscrypt_check_hie_ext4(struct bio *bio, const struct inode *inode)
 	const struct fscrypt_info *ci = inode->i_crypt_info;
 	struct bio_crypt_ctx *bc = bio->bi_crypt_context;
 
-	if ((ci->ci_policy.version == FSCRYPT_POLICY_V1) &&
-	    (ci->ci_inode->i_sb->s_magic == EXT4_SUPER_MAGIC))
-		bc->hie_ext4 = true;
+	if (ci->ci_policy.version == FSCRYPT_POLICY_V1) {
+		if (ci->ci_inode->i_sb->s_magic == EXT4_SUPER_MAGIC) {
+			bc->hie_ext4 = true;
+			bc->hie_f2fs_legacy = false;
+		} else {
+			bc->hie_ext4 = false;
+			bc->hie_f2fs_legacy = true;
+		}
+	} else {
+		bc->hie_ext4 = false;
+		bc->hie_f2fs_legacy = false;
+	}
 }
 
 /**

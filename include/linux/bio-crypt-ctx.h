@@ -58,6 +58,7 @@ struct blk_crypto_key {
 	unsigned int hash;
 
 	bool is_hw_wrapped;
+	bool hie_legacy;
 	u8 raw[BLK_CRYPTO_MAX_WRAPPED_KEY_SIZE];
 };
 
@@ -112,6 +113,9 @@ struct bio_crypt_ctx {
 
 	/* Compatibility for OTA from HIE + EXT4 */
 	bool hie_ext4;
+
+	/* eMMC + F2FS OTA only */
+	bool hie_f2fs_legacy;
 };
 
 int bio_crypt_ctx_init(void);
@@ -159,11 +163,9 @@ static inline bool bio_crypt_dun_is_contiguous(const struct bio_crypt_ctx *bc,
 	unsigned int inc = bytes >> bc->bc_key->data_unit_size_bits;
 
 	/* eMMC + F2FS OTA only */
-#ifdef CONFIG_MMC_CRYPTO_LEGACY
-	if (fscrypt_force_iv_ino_lblk_32() && !bc->hie_ext4 &&
+	if (bc->hie_f2fs_legacy && fscrypt_force_iv_ino_lblk_32() &&
 		(bc->bc_key->hie_duint_size != 4096))
 		inc = inc * 8;
-#endif
 
 	while (i < BLK_CRYPTO_DUN_ARRAY_SIZE) {
 		if (bc->bc_dun[i] + inc != next_dun[i])
@@ -199,11 +201,9 @@ static inline void bio_crypt_advance(struct bio *bio, unsigned int bytes)
 	inc = bytes >> bc->bc_key->data_unit_size_bits;
 
 	/* eMMC + F2FS OTA only */
-#ifdef CONFIG_MMC_CRYPTO_LEGACY
-	if (fscrypt_force_iv_ino_lblk_32() && !bc->hie_ext4 &&
+	if (bc->hie_f2fs_legacy && fscrypt_force_iv_ino_lblk_32() &&
 		(bc->bc_key->hie_duint_size != 4096))
 		inc = inc * 8;
-#endif
 
 	bio_crypt_dun_increment(bc->bc_dun, inc);
 }

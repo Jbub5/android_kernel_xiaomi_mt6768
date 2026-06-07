@@ -79,11 +79,9 @@ static int cqhci_crypto_keyslot_program(struct keyslot_manager *ksm,
 		return -EOPNOTSUPP;
 
 	cfg.data_unit_size = data_unit_mask;
-#ifdef CONFIG_MMC_CRYPTO_LEGACY
 	/* used fsrypt v2 in OTA fscrypt v1 environment */
-	if (key->hie_duint_size != 4096)
+	if (key->hie_legacy && key->hie_duint_size != 4096)
 		cfg.data_unit_size = 1;
-#endif
 
 	cfg.crypto_cap_idx = cap_idx;
 	cfg.config_enable = CQHCI_CRYPTO_CONFIGURATION_ENABLE;
