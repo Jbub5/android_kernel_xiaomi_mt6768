@@ -45,7 +45,6 @@
 #define PK_ERR(fmt, arg...) \
 	pr_info(TAG_NAME "%s: " fmt, __func__, ##arg)
 
-#define DEBUG_LEDS_STROBE
 #ifdef DEBUG_LEDS_STROBE
 #define PK_LOG(fmt, arg...) \
 	pr_info(TAG_NAME "%s is called.\n", __func__)
