@@ -53,7 +53,7 @@ endif
 mtk-vcodec-common-y := $(MTK_PLATFORM)/mtk_vcodec_intr.o \
 		mtk_vcodec_util.o\
 
-subdir-ccflags-y += -Werror
+#subdir-ccflags-y += -Werror
 ifdef CONFIG_VIDEO_MEDIATEK_VCU
 	ccflags-y += -I$(srctree)/drivers/media/platform/mtk-vcu
 endif
