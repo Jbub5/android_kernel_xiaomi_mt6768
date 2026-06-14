@@ -68,7 +68,6 @@ extern struct mutex cpufreq_para_mutex;
 
 /* Debugging */
 extern unsigned int func_lv_mask;
-#define DEBUG 1
 
 #define TAG	"[Power/cpufreq] "
 #define tag_pr_notice(fmt, args...)	pr_notice(TAG fmt, ##args)

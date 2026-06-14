@@ -56,8 +56,6 @@ extern int mtk_v4l2_dbg_level;
 extern bool mtk_vcodec_dbg;
 extern bool mtk_vcodec_perf;
 
-#define DEBUG   1
-
 #if defined(DEBUG)
 
 #define mtk_v4l2_debug(level, fmt, args...)                              \
@@ -105,6 +103,7 @@ extern bool mtk_vcodec_perf;
 #define mtk_v4l2_debug_leave()
 
 #define mtk_vcodec_debug(h, fmt, args...)
+#define mtk_vcodec_perf_log(fmt, args...)
 #define mtk_vcodec_err(h, fmt, args...)
 #define mtk_vcodec_debug_enter(h)
 #define mtk_vcodec_debug_leave(h)
