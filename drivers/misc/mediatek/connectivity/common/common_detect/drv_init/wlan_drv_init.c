@@ -20,25 +20,25 @@
 #include "wmt_detect.h"
 #include "wlan_drv_init.h"
 
-int __attribute__((weak)) mtk_wcn_wlan_gen4_init(void)
+int __attribute__((weak)) mtk_wcn_wlan_gen4_init()
 {
 	WMT_DETECT_PR_INFO("no impl. mtk_wcn_wlan_gen4_init\n");
 	return 0;
 }
 
-int __attribute__((weak)) mtk_wcn_wlan_gen3_init(void)
+int __attribute__((weak)) mtk_wcn_wlan_gen3_init()
 {
 	WMT_DETECT_PR_INFO("no impl. mtk_wcn_wlan_gen3_init\n");
 	return 0;
 }
 
-int __attribute__((weak)) mtk_wcn_wlan_gen2_init(void)
+int __attribute__((weak)) mtk_wcn_wlan_gen2_init()
 {
 	WMT_DETECT_PR_INFO("no impl. mtk_wcn_wlan_gen2_init\n");
 	return 0;
 }
 
-int __attribute__((weak)) mtk_wcn_wmt_wifi_init(void)
+int __attribute__((weak)) mtk_wcn_wmt_wifi_init()
 {
 	WMT_DETECT_PR_INFO("no impl. mtk_wcn_wmt_wifi_init\n");
 	return 0;

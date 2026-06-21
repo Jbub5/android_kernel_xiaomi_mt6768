@@ -829,7 +829,7 @@ INT32 mtk_wcn_consys_detect_adie_chipid(UINT32 co_clock_type)
 	return chipid;
 }
 
-struct pinctrl *mtk_wcn_consys_get_pinctrl(void)
+struct pinctrl *mtk_wcn_consys_get_pinctrl()
 {
 	return consys_pinctrl;
 }
