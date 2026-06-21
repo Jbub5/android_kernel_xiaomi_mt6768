@@ -66,11 +66,7 @@ endif
     obj-$(CONFIG_MTK_COMBO_WIFI) += wlan/core/gen4m/
     obj-$(CONFIG_MTK_COMBO_BT) += bt/mt66xx/
     obj-$(CONFIG_MTK_COMBO_GPS) += gps/
-ifeq ($(CONFIG_MTK_FMRADIO),y)
-    export CFG_FM_CHIP_ID=6785
-    export CFG_FM_CHIP=mt6631
-    obj-y += fmradio/
-endif
+    obj-$(CONFIG_MTK_FMRADIO) += fmradio/
 
 # Otherwise we were called directly from the command line;
 # invoke the kernel build system.
