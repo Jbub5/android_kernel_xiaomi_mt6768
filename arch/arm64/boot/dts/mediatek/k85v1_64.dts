@@ -1,6 +1,5 @@
 /*
  * Copyright (C) 2015 MediaTek Inc.
- * Copyright (C) 2021 XiaoMi, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 as
@@ -16,7 +15,6 @@
 #include <dt-bindings/interrupt-controller/irq.h>
 #include <dt-bindings/interrupt-controller/arm-gic.h>
 #include <dt-bindings/pinctrl/mt6785-pinfunc.h>
-#include "mediatek/touchscreen.dtsi"
 
 &reserved_memory {
 };
@@ -427,5 +425,5 @@
 
 #include <k85v1_64/cust.dtsi>
 #include "mediatek/cust_mt6785_camera.dtsi"
-//#include "mediatek/cust_mt6785_touch_1080x2160.dtsi"
+#include "mediatek/cust_mt6785_touch_1080x2160.dtsi"
 /*End of this file, DO NOT ADD ANYTHING HERE*/
