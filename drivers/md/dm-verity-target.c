@@ -1,6 +1,5 @@
 /*
  * Copyright (C) 2012 Red Hat, Inc.
- * Copyright (C) 2021 XiaoMi, Inc.
  *
  * Author: Mikulas Patocka <mpatocka@redhat.com>
  *
