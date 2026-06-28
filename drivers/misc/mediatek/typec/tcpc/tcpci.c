@@ -1,6 +1,5 @@
 /*
  * Copyright (C) 2017 MediaTek Inc.
- * Copyright (C) 2021 XiaoMi, Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 as
@@ -91,7 +90,7 @@ static int tcpc_check_notify_time(struct tcpc_device *tcpc,
 
 int tcpci_check_vbus_valid_from_ic(struct tcpc_device *tcpc)
 {
-	uint16_t power_status = 0;
+	uint16_t power_status;
 	int vbus_level = tcpc->vbus_level;
 
 	if (tcpci_get_power_status(tcpc, &power_status) == 0) {
@@ -188,7 +187,7 @@ int tcpci_get_power_status(
 int tcpci_init(struct tcpc_device *tcpc, bool sw_reset)
 {
 	int ret;
-	uint16_t power_status = 0;
+	uint16_t power_status;
 
 	PD_BUG_ON(tcpc->ops->init == NULL);
 

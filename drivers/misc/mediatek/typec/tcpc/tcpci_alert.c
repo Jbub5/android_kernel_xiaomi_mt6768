@@ -1,6 +1,5 @@
 /*
  * Copyright (C) 2021 MediaTek Inc.
- * Copyright (C) 2021 XiaoMi, Inc.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 as
@@ -557,7 +556,7 @@ static inline int tcpci_set_wake_lock_pd(
 	return 0;
 }
 
-int tcpci_report_usb_port_attached(struct tcpc_device *tcpc)
+static inline int tcpci_report_usb_port_attached(struct tcpc_device *tcpc)
 {
 	TCPC_INFO("usb_port_attached\n");
 
@@ -571,22 +570,14 @@ int tcpci_report_usb_port_attached(struct tcpc_device *tcpc)
 #endif	/* CONFIG_USB_PD_DISABLE_PE */
 
 	/* MTK Only */
-	if (tcpc->pd_inited_flag) {
-#ifdef CONFIG_TYPEC_WAIT_BC12
-		if (tcpc->typec_attach_new == TYPEC_ATTACHED_SNK)
-			tcpc_enable_timer(tcpc, TYPEC_RT_TIMER_SINK_WAIT_BC12);
-		else
-			pd_put_cc_attached_event(tcpc, tcpc->typec_attach_new);
-#else
+	if (tcpc->pd_inited_flag)
 		pd_put_cc_attached_event(tcpc, tcpc->typec_attach_new);
-#endif
-	}
 #endif /* CONFIG_USB_POWER_DLEIVERY */
 
 	return 0;
 }
 
-int tcpci_report_usb_port_detached(struct tcpc_device *tcpc)
+static inline int tcpci_report_usb_port_detached(struct tcpc_device *tcpc)
 {
 	TCPC_INFO("usb_port_detached\n");
 
