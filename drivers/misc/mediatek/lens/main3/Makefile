@@ -38,7 +38,6 @@ obj-y += main3_lens.o
 #obj-y += common/ak7371af/
 obj-y += common/bu24253af/
 obj-y += common/gt9772af/
-obj-y += common/dw9714af/
 
 
 endif
