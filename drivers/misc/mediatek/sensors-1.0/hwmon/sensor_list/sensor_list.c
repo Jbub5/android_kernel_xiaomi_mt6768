@@ -1,6 +1,5 @@
 /*
  * Copyright (C) 2016 MediaTek Inc.
- * Copyright (C) 2021 XiaoMi, Inc.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 as
@@ -39,7 +38,6 @@ enum {
 	ps,
 	baro,
 	sar,
-	lightsecondary,
 	maxhandle,
 };
 
@@ -76,9 +74,6 @@ inline int sensor_to_handle(int sensor)
 	case ID_SAR:
 		handle = sar;
 		break;
-	case ID_LIGHTSECONDARY:
-		handle = lightsecondary;
-		break;
 	}
 	return handle;
 }
@@ -108,9 +103,6 @@ static inline int handle_to_sensor(int handle)
 		break;
 	case sar:
 		sensor = ID_SAR;
-		break;
-	case lightsecondary:
-		sensor = ID_LIGHTSECONDARY;
 		break;
 	}
 	return sensor;
