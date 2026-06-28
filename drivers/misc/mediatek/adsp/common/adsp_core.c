@@ -1,7 +1,6 @@
 /* SPDX-License-Identifier: GPL-2.0 */
 /*
  * Copyright (c) 2019 MediaTek Inc.
- * Copyright (C) 2021 XiaoMi, Inc.
  */
 
 #include <linux/module.h>       /* needed by all modules */
@@ -198,7 +197,6 @@ static irqreturn_t adsp_irq_dispatcher(int irq, void *data)
 
 	if (pdata->clear_irq)
 		pdata->clear_irq(pdata->cid);
-		wmb(); /* drain writebuffer */
 
 	return IRQ_HANDLED;
 }
