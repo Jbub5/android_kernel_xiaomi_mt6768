@@ -4290,11 +4290,6 @@ err_alloc_tcomplete_failed:
 	binder_cancel_bwdog(t);
 #endif
 #ifdef BINDER_USER_TRACKING
-	if (t->code) {
-		binder_debug(BINDER_DEBUG_FAILED_TRANSACTION,
-			     "%d:%d transaction %d failed code: %x",
-			      proc->pid, thread->pid, t->debug_id, t->code);
-	}
 	binder_print_delay(t);
 #endif
 	kfree(t);
