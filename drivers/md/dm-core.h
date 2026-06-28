@@ -18,6 +18,8 @@
 #include "dm.h"
 
 #define DM_RESERVED_MAX_IOS		1024
+#define DM_MAX_TARGETS			1048576
+#define DM_MAX_TARGET_PARAMS		1024
 #define DM_WAIT_DEV_MAX_TIME		5000
 
 struct dm_kobject_holder {
