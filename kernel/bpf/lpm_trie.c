@@ -15,6 +15,7 @@
 #include <linux/spinlock.h>
 #include <linux/vmalloc.h>
 #include <net/ipv6.h>
+#include <uapi/linux/btf.h>
 
 /* Intermediate node */
 #define LPM_TREE_NODE_FLAG_IM BIT(0)
@@ -435,13 +436,7 @@ static struct bpf_map *trie_alloc(union bpf_attr *attr)
 	if (!trie)
 		return ERR_PTR(-ENOMEM);
 
-	/* copy mandatory map attributes */
-	trie->map.map_type = attr->map_type;
-	trie->map.key_size = attr->key_size;
-	trie->map.value_size = attr->value_size;
-	trie->map.max_entries = attr->max_entries;
-	trie->map.map_flags = attr->map_flags;
-	trie->map.numa_node = bpf_map_attr_numa_node(attr);
+	bpf_map_init_from_attr(&trie->map, attr);
 	trie->data_size = attr->key_size -
 			  offsetof(struct bpf_lpm_trie_key, data);
 	trie->max_prefixlen = trie->data_size * 8;
@@ -517,6 +512,16 @@ static int trie_get_next_key(struct bpf_map *map, void *key, void *next_key)
 	return -ENOTSUPP;
 }
 
+static int trie_check_btf(const struct bpf_map *map,
+			  const struct btf *btf,
+			  const struct btf_type *key_type,
+			  const struct btf_type *value_type)
+{
+	/* Keys must have struct bpf_lpm_trie_key embedded. */
+	return BTF_INFO_KIND(key_type->info) != BTF_KIND_STRUCT ?
+	       -EINVAL : 0;
+}
+
 const struct bpf_map_ops trie_map_ops = {
 	.map_alloc = trie_alloc,
 	.map_free = trie_free,
@@ -524,4 +529,5 @@ const struct bpf_map_ops trie_map_ops = {
 	.map_lookup_elem = trie_lookup_elem,
 	.map_update_elem = trie_update_elem,
 	.map_delete_elem = trie_delete_elem,
+	.map_check_btf = trie_check_btf,
 };
