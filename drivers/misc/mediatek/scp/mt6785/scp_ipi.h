@@ -1,6 +1,5 @@
 /*
  * Copyright (C) 2017 MediaTek Inc.
- * Copyright (C) 2021 XiaoMi, Inc.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 as
@@ -65,8 +64,7 @@ enum ipi_id {
 	IPI_SCP_TIMER,              /* 30 */
 	IPI_SCP_ERROR_INFO,
 	IPI_SCPCTL,
-	IPI_SCP_LOG_FILTER,// = 33,
-	IPI_ELLIPTIC = 34,
+	IPI_SCP_LOG_FILTER = 33,
 	SCP_NR_IPI,
 };
 
