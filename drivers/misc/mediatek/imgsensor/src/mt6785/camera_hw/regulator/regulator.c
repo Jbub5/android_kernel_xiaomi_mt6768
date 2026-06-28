@@ -1,6 +1,5 @@
 /*
  * Copyright (C) 2017 MediaTek Inc.
- * Copyright (C) 2021 XiaoMi, Inc.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 as
@@ -25,7 +24,6 @@ static const int regulator_voltage[] = {
 	REGULATOR_VOLTAGE_1500,
 	REGULATOR_VOLTAGE_1800,
 	REGULATOR_VOLTAGE_2500,
-        REGULATOR_VOLTAGE_2700,
 	REGULATOR_VOLTAGE_2800,
 	REGULATOR_VOLTAGE_2900,
 };

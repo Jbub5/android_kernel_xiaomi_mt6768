@@ -1,6 +1,5 @@
 /*
  * Copyright (C) 2017 MediaTek Inc.
- * Copyright (C) 2021 XiaoMi, Inc.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 as
@@ -132,12 +131,13 @@ static enum IMGSENSOR_RETURN imgsensor_hw_power_sequence(
 		if (pwr_status == IMGSENSOR_HW_POWER_STATUS_ON &&
 		   ppwr_info->pin != IMGSENSOR_HW_PIN_UNDEF) {
 			pdev = phw->pdev[psensor_pwr->id[ppwr_info->pin]];
-
-			pr_debug("[%s] sensor_idx = %d, pin=%d, pin_state_on=%d, hw_id =%d\n",
-					__func__,
-					sensor_idx, ppwr_info->pin,
-					ppwr_info->pin_state_on,
-					psensor_pwr->id[ppwr_info->pin]);
+		/*pr_debug(
+		 *  "sensor_idx = %d, pin=%d, pin_state_on=%d, hw_id =%d\n",
+		 *  sensor_idx,
+		 *  ppwr_info->pin,
+		 *  ppwr_info->pin_state_on,
+		 * psensor_pwr->id[ppwr_info->pin]);
+		 */
 
 			if (pdev->set != NULL)
 				pdev->set(
@@ -162,13 +162,6 @@ static enum IMGSENSOR_RETURN imgsensor_hw_power_sequence(
 				pdev =
 				    phw->pdev[psensor_pwr->id[ppwr_info->pin]];
 				mdelay(ppwr_info->pin_on_delay);
-
-				pr_info("[%s] sensor_idx = %d, pin=%d, pin_state_on=%d, hw_id =%d\n",
-					__func__,
-					sensor_idx,
-					ppwr_info->pin,
-					ppwr_info->pin_state_off,
-					psensor_pwr->id[ppwr_info->pin]);
 
 				if (pdev->set != NULL)
 					pdev->set(
@@ -196,8 +189,8 @@ enum IMGSENSOR_RETURN imgsensor_hw_power(
 	char str_index[LENGTH_FOR_SNPRINTF];
 	int ret = 0;
 
-	pr_info("[%s] sensor_idx %d, power %d curr_sensor_name %s, enable list %s\n",
-		__func__,
+	pr_info(
+		"sensor_idx %d, power %d curr_sensor_name %s, enable list %s\n",
 		sensor_idx,
 		pwr_status,
 		curr_sensor_name,

@@ -1,6 +1,5 @@
 /*
  * Copyright (C) 2017 MediaTek Inc.
- * Copyright (C) 2021 XiaoMi, Inc.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 as
@@ -33,7 +32,6 @@ enum REGULATOR_VOLTAGE {
 	REGULATOR_VOLTAGE_1500 = 1500000,
 	REGULATOR_VOLTAGE_1800 = 1800000,
 	REGULATOR_VOLTAGE_2500 = 2500000,
-        REGULATOR_VOLTAGE_2700 = 2700000,
 	REGULATOR_VOLTAGE_2800 = 2800000,
 	REGULATOR_VOLTAGE_2900 = 2900000,
 };
