@@ -595,6 +595,7 @@ static void vdec_pre_busprotect(void)
 	data_latched[15] = clk_readl(VDEC_REG11);
 }
 
+#ifdef CONFIG_MTK_RAM_CONSOLE
 static void vdec_dump_regs(void)
 {
 	int i;
@@ -680,6 +681,7 @@ static void vdec_dump_regs(void)
 		clk_readl(UFO+i*4), clk_readl(UFO+(i+1)*4),
 		clk_readl(UFO+(i+2)*4), clk_readl(UFO+(i+3)*4));
 }
+#endif
 
 enum dbg_id {
 	DBG_ID_MD1_BUS = 0,
