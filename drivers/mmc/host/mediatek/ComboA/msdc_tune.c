@@ -34,14 +34,14 @@ void msdc_sdio_restore_after_resume(struct msdc_host *host)
 /* new tx select will be saved to and restored from host->saved_para.sdc_adv_cfg0 */
 void msdc_select_new_tx(struct msdc_host *host)
 {
-	void __iomem *base = host->base, *base_top = host->base_top;
+	void __iomem *base = host->base;
 
 	MSDC_SET_FIELD(SDC_ADV_CFG0, SDC_ADV_CFG0_TX_PIPE_EN, 1);
 }
 
 void msdc_loop_setting(struct msdc_host *host, struct mmc_ios *ios)
 {
-	void __iomem *base = host->base, *base_top = host->base_top;
+	void __iomem *base_top = host->base_top;
 
 	switch (ios->timing) {
 	case MMC_TIMING_MMC_HS400:
@@ -72,7 +72,7 @@ void msdc_loop_setting(struct msdc_host *host, struct mmc_ios *ios)
 
 void msdc_new_rx_tx_timing_setting(struct msdc_host *host)
 {
-	void __iomem *base = host->base, *base_top = host->base_top;
+	void __iomem *base_top = host->base_top;
 
 	if (host->id == 0) {
 		if (host->timing == MMC_TIMING_MMC_DDR52) {
@@ -162,7 +162,7 @@ void msdc_new_tx_new_rx_setting(struct msdc_host *host)
 
 void msdc_new_tx_old_rx_setting(struct msdc_host *host)
 {
-	void __iomem *base = host->base, *base_top = host->base_top;
+	void __iomem *base = host->base;
 
 	MSDC_SET_FIELD(SDC_ADV_CFG0, SDC_ADV_CFG0_TX_PIPE_EN, 1);
 }
