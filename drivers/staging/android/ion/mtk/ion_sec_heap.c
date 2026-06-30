@@ -319,7 +319,6 @@ ion_fd2sec_type(int fd, int *sec, int *iommu_sec_id,
 		ion_phys_addr_t *sec_hdl)
 {
 	enum TRUSTED_MEM_REQ_TYPE tmem_type = -1;
-	struct ion_buffer *buffer;
 	struct ion_client *client;
 	struct ion_handle *handle;
 
