@@ -202,8 +202,6 @@ static int vdec_decode(unsigned long h_vdec, struct mtk_vcodec_mem *bs,
 	uint64_t fb_dma[VIDEO_MAX_PLANES] = { 0 };
 	uint32_t num_planes;
 	unsigned int i = 0;
-	unsigned int bs_fourcc = inst->ctx->q_data[MTK_Q_DATA_SRC].fmt->fourcc;
-	unsigned int fm_fourcc = inst->ctx->q_data[MTK_Q_DATA_DST].fmt->fourcc;
 	unsigned int *errormap_info = &inst->ctx->errormap_info[0];
 
 	num_planes = fb ? inst->vsi->dec.fb_num_planes : 0U;
