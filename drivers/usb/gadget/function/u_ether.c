@@ -1265,7 +1265,6 @@ struct eth_dev *gether_setup_name(struct usb_gadget *g,
 	struct eth_dev		*dev;
 	struct net_device	*net;
 	int			status;
-	static unsigned char a[6] = {0x06, 0x16, 0x26, 0x36, 0x46, 0x56};
 
 	net = alloc_etherdev(sizeof *dev);
 	if (!net)
