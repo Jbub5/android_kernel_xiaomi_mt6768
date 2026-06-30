@@ -260,56 +260,6 @@ static void record_i2c_info(struct mt_i2c *i2c, int tmo)
 		i2c->rec_idx = 0;
 }
 
-static int mt_i2c_clock_prepare(struct mt_i2c *i2c)
-{
-#if !defined(CONFIG_MT_I2C_FPGA_ENABLE)
-	int ret = 0;
-
-	ret = clk_prepare(i2c->clk_dma);
-	if (ret)
-		return ret;
-
-	if (i2c->clk_pal != NULL) {
-		ret = clk_prepare(i2c->clk_pal);
-		if (ret)
-			goto err_pal;
-	}
-
-	if (i2c->clk_arb != NULL) {
-		ret = clk_prepare(i2c->clk_arb);
-		if (ret)
-			goto err_arb;
-	}
-
-	ret = clk_prepare(i2c->clk_main);
-	if (ret)
-		goto err_main;
-
-	if (i2c->have_pmic) {
-		ret = clk_prepare(i2c->clk_pmic);
-		if (ret)
-			goto err_pmic;
-	}
-
-	return 0;
-
-err_pmic:
-	clk_unprepare(i2c->clk_main);
-err_main:
-	if (i2c->clk_arb)
-		clk_unprepare(i2c->clk_arb);
-err_arb:
-	if (i2c->clk_pal)
-		clk_unprepare(i2c->clk_pal);
-err_pal:
-	clk_unprepare(i2c->clk_dma);
-	return ret;
-#else
-
-	return 0;
-#endif
-}
-
 static int mt_i2c_clock_enable(struct mt_i2c *i2c)
 {
 #if !defined(CONFIG_MT_I2C_FPGA_ENABLE)
