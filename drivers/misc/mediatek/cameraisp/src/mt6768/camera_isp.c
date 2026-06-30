@@ -6444,7 +6444,7 @@ static signed int ISP_REGISTER_IRQ_USERKEY(char *userName)
 		LOG_DBG(" [regUser] userName is NULL\n");
 	} else {
 		/*get UserName from user space */
-		length = strnlen(userName, USERKEY_STR_LEN);
+		length = strnlen(userName, 32);
 		if (length == 0) {
 			LOG_DBG("[regUser] userName address is not valid\n");
 			return key;
