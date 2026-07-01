@@ -3424,11 +3424,7 @@ static void perf_adjust_period(struct perf_event *event, u64 nsec, u64 count, bo
 	period = perf_calculate_period(event, nsec, count);
 
 	delta = (s64)(period - hwc->sample_period);
-	if (delta >= 0)
-		delta += 7;
-	else
-		delta -= 7;
-	delta /= 8; /* low pass filter */
+	delta = (delta + 7) / 8; /* low pass filter */
 
 	sample_period = hwc->sample_period + delta;
 
@@ -4910,8 +4906,6 @@ static long _perf_ioctl(struct perf_event *event, unsigned int cmd, unsigned lon
 		rcu_read_unlock();
 		return 0;
 	}
-	case PERF_EVENT_IOC_QUERY_BPF:
-		return perf_event_query_prog_array(event, (void __user *)arg);
 	default:
 		return -ENOTTY;
 	}
@@ -6912,7 +6906,7 @@ static void perf_fill_ns_link_info(struct perf_ns_link_info *ns_link_info,
 {
 	struct path ns_path;
 	struct inode *ns_inode;
-	int error;
+	void *error;
 
 	error = ns_get_path(&ns_path, task, ns_ops);
 	if (!error) {
