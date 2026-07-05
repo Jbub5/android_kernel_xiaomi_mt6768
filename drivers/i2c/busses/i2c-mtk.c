@@ -1365,6 +1365,11 @@ static int mt_i2c_parse_dt(struct device_node *np, struct mt_i2c *i2c)
 	of_property_read_u32(np, "pu_cfg", &i2c->offset_pu_cfg);
 	of_property_read_u32(np, "rsel_cfg", &i2c->offset_rsel_cfg);
 	of_property_read_u32(np, "id", (u32 *)&i2c->id);
+
+	if ((id == 1) || (id == 6) || (id == 8)) {
+		return -1;
+	}
+
 	of_property_read_u16(np, "clk_sta_offset",
 		(u16 *)&i2c->clk_sta_offset);
 	of_property_read_u8(np, "cg_bit", (u8 *)&i2c->cg_bit);
