@@ -11,5 +11,7 @@
 # GNU General Public License for more details.
 
 obj-$(CONFIG_MICROTRUST_VFS_DRIVER) += tz_dcih.o
+ifeq ($(CONFIG_MTK_ENG_BUILD),y)
 obj-$(CONFIG_MICROTRUST_VFS_DRIVER) += tz_dcih_test.o
+endif
 ccflags-y += -fno-pic -Werror
